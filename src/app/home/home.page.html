@@ -1,11 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-menu-button></ion-menu-button>
+    <!-- Botón del menú alineado al lado izquierdo -->
+    <ion-menu-button slot="start"></ion-menu-button> <!-- Asegúrate de que el slot sea "start" para alinear a la izquierda -->
     <ion-title>Home</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-menu side="start" contentId="main-content">
+<!-- Menú en el lado izquierdo (start) -->
+<ion-menu side="start" contentId="main-content" menuType="reveal"> <!-- side="start" garantiza que el menú se abra desde la izquierda -->
   <ion-header>
     <ion-toolbar>
       <ion-title>Menú</ion-title>
@@ -27,12 +29,10 @@
         <ion-icon slot="start" name="settings"></ion-icon>
         <ion-label>Configuraciones</ion-label>
       </ion-item>
-      <!-- Botón para cerrar sesión -->
       <ion-item *ngIf="isLoggedIn" (click)="logout()">
         <ion-icon slot="start" name="log-out"></ion-icon>
         <ion-label>Cerrar sesión</ion-label>
       </ion-item>
-      <!-- Botón para iniciar sesión -->
       <ion-item *ngIf="!isLoggedIn" (click)="goToLogin()">
         <ion-icon slot="start" name="log-in"></ion-icon>
         <ion-label>Iniciar sesión</ion-label>
@@ -41,6 +41,7 @@
   </ion-content>
 </ion-menu>
 
+<!-- Contenido principal -->
 <ion-content id="main-content">
   <div class="home-content">
     <!-- Contenido adicional de la página de inicio -->
