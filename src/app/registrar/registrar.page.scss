@@ -9,7 +9,7 @@
   form {
     width: 100%;
     max-width: 400px;
-    padding: 20px;
+    padding: 30px;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -18,16 +18,16 @@
       --background: #ffffff;
       --padding-start: 0px;
       --padding-end: 0px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       --min-height: 50px;
       --border-width: 0px;
 
       ion-input, ion-select {
-        border: 1px solid #de7e1e; /* Borde naranjo */
+        border: 0.5px solid #de7e1e; /* Borde naranjo */
         border-radius: 8px;
-        padding: 10px;
+        padding: 1px;
         background: #ffffff;
-        font-size: 16px;
+        font-size: 20px;
       }
 
       ion-input::placeholder {
