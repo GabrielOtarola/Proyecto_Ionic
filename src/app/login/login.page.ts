@@ -24,11 +24,9 @@ export class LoginPage {
     if (this.loginForm.valid) {
       const { username } = this.loginForm.value;
 
-      // Aquí debes realizar la lógica de autenticación
-      // Supongamos que la autenticación es exitosa
-
-      localStorage.setItem('username', username); // Guardar el nombre de usuario en el almacenamiento local
-      this.navCtrl.navigateForward('/home');
+      // Aquí va la lógica de autenticación (si aplica)
+      // Redirigir a la página de inicio después de autenticarse
+      this.navCtrl.navigateForward(`/home?username=${username}`);
     } else {
       console.log('Formulario inválido');
     }

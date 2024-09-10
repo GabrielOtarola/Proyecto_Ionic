@@ -2,7 +2,7 @@
   <ion-toolbar>
     <!-- Botón del menú alineado al lado izquierdo -->
     <ion-menu-button slot="start"></ion-menu-button> <!-- Asegúrate de que el slot sea "start" para alinear a la izquierda -->
-    <ion-title>Home</ion-title>
+    <ion-title>Inicio</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -20,7 +20,7 @@
           <h2>{{ welcomeMessage }}</h2>
         </ion-label>
       </ion-item>
-      <!-- Añade otros ítems de menú aquí -->
+      <!-- Ítems del menú, dependiendo de si el usuario está autenticado o no -->
       <ion-item routerLink="/profile" *ngIf="isLoggedIn">
         <ion-icon slot="start" name="person"></ion-icon>
         <ion-label>Perfil</ion-label>
@@ -44,6 +44,7 @@
 <!-- Contenido principal -->
 <ion-content id="main-content">
   <div class="home-content">
-    <!-- Contenido adicional de la página de inicio -->
+    <!-- Puedes añadir cualquier contenido adicional aquí para la página de inicio -->
+    <h2>{{ welcomeMessage }}</h2>
   </div>
 </ion-content>
