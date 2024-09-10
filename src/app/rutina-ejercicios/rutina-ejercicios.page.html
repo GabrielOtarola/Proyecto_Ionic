@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Rutina de Ejercicios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="routine-container">
+    <!-- Lista de rutinas -->
+    <div *ngIf="!ejercicioActual" class="rutina-list">
+      <h2>Selecciona una rutina</h2>
+      <ion-list>
+        <ion-item *ngFor="let rutina of rutinas" (click)="seleccionarRutina(rutina)">
+          <ion-label>{{ rutina.nombre }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+    
+    <!-- Detalle del ejercicio actual -->
+    <div *ngIf="ejercicioActual" class="rutina-detalle">
+      <h2>{{ ejercicioActual.nombre }}</h2>
+
+      <!-- Mostrar imagen dependiendo del ejercicio actual -->
+      <ion-img *ngIf="ejercicioActual.nombre === 'Calentamiento'" src="assets/img/calentamiento.gif"></ion-img>
+      <ion-img *ngIf="ejercicioActual.nombre === 'Estiramiento'" src="assets/img/estiramiento.gif"></ion-img>
+      <ion-img *ngIf="ejercicioActual.nombre === 'Flexiones'" src="assets/img/flexiones.gif"></ion-img>
+      <ion-img *ngIf="ejercicioActual.nombre === 'Sentadillas'" src="assets/img/sentadillas.gif"></ion-img>
+      <ion-img *ngIf="ejercicioActual.nombre === 'Correr en el lugar'" src="assets/img/correr en el lugar.gif"></ion-img>
+      <ion-img *ngIf="ejercicioActual.nombre === 'Saltos de tijera'" src="assets/img/saltos de tijera.gif"></ion-img>
+      <ion-img *ngIf="ejercicioActual.nombre === 'Abdominales cortos'" src="assets/img/abdominales cortos.gif"></ion-img>
+      <ion-img *ngIf="ejercicioActual.nombre === 'Plancha'" src="assets/img/plancha.gif"></ion-img>
+      <ion-img *ngIf="ejercicioActual.nombre === 'Estiramiento de piernas'" src="assets/img/estiramiento de piernas.gif"></ion-img>
+      <ion-img *ngIf="ejercicioActual.nombre === 'Estiramiento de brazos'" src="assets/img/estiramiento de brazos.gif"></ion-img>
+
+      <p>Tiempo restante: {{ tiempoRestante }} segundos</p>
+      <ion-progress-bar [value]="progreso"></ion-progress-bar>
+      <ion-button expand="full" (click)="iniciarRutina()" [disabled]="rutinaCompletada">Iniciar Rutina</ion-button>
+      <ion-button expand="full" (click)="detenerRutina()" [disabled]="!ejercicioActual || rutinaCompletada">Detener Rutina</ion-button>
+    </div>
+    
+    <!-- Mensaje cuando la rutina está completa -->
+    <div *ngIf="!ejercicioActual && rutinaCompletada" class="rutina-completada">
+      <p>¡Rutina completada!</p>
+      <ion-button expand="full" (click)="volverALista()">Volver a la lista de rutinas</ion-button>
+    </div>
+  </div>
+</ion-content>

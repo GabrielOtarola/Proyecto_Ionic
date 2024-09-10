@@ -1,0 +1,49 @@
+#container {
+  text-align: center;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+
+  color: #8c8c8c;
+
+  margin: 0;
+}
+
+#container a {
+  text-decoration: none;
+}
+
+.home-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0 16px; // Ajusta el padding según sea necesario
+}
+
+ion-menu {
+  --width: 280px; // Ajusta el ancho del menú según sea necesario
+}
+
+ion-menu h2 {
+  font-size: 18px;
+  color: #4a90e2; // Color del texto del mensaje de bienvenida
+  margin: 16px;
+}
+
+
+
+

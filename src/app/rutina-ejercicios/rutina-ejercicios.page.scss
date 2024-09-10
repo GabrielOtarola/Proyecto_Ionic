@@ -1,0 +1,59 @@
+/* Estilos para el temporizador visual */
+.timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .timer-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 8px solid #3880ff;
+    border-top-color: transparent;
+    animation: spin 1.5s linear infinite;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  #timerText {
+    margin-top: 10px;
+    font-size: 24px;
+    color: #3880ff;
+  }
+  
+  /* Estilos para la barra de progreso */
+  .progress-container {
+    width: 100%;
+    background-color: #f0f0f0;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: #3880ff;
+    transition: width 1s ease-in-out;
+  }
+  
+  /* Cambiar colores al iniciar la rutina */
+  .routine-active {
+    background-color: #d4edda; /* Color de fondo durante la rutina */
+    color: #155724; /* Color de texto durante la rutina */
+  }
+  
+  /* Ocultar elementos al iniciar la rutina */
+  .routine-hidden {
+    display: none;
+  }
+  
