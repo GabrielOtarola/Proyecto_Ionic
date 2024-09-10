@@ -30,6 +30,9 @@
 
       <ion-button expand="block" fill="outline" class="signup-button" routerLink="/registrar">Regístrate</ion-button>
 
+      <!-- Mensaje de error -->
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
       <!-- Enlace a la página de recuperar contraseña -->
       <ion-router-link routerLink="/recuperar-contrasena" class="forgot-password-link">
         ¿Olvidaste tu contraseña?

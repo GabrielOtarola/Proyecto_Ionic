@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { NavegextraService } from './services/navegextra.service';  // Importar el servicio
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,9 +14,9 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    ReactiveFormsModule, // Importa ReactiveFormsModule para formularios reactivos
+    ReactiveFormsModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, NavegextraService],  // Añadir NavegextraService a los proveedores
   bootstrap: [AppComponent],
 })
 export class AppModule {}
