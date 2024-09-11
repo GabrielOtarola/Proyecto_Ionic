@@ -23,6 +23,32 @@
   text-decoration: none;
 }
 
+/* Contenedor del logo y título */
+.logo-container {
+  display: flex;
+  flex-direction: row; /* Coloca los elementos en fila (horizontalmente) */
+  align-items: center; /* Centra verticalmente el logo y el título */
+  justify-content: flex-start; /* Alinea los elementos al lado izquierdo */
+  margin-bottom: 10px;
+  margin-top: 10px;
+  width: 100%; /* Ocupa todo el ancho disponible */
+  padding-left: 0px; /* Espacio desde el borde izquierdo de la pantalla */
+}  
+
+/* Ajustes del logo */
+.logo-img {
+  width: 100px; /* Ajusta el tamaño del logo */
+  height: auto;
+  margin-right: 0px; /* Espacio entre el logo y el título */
+}
+
+/* Ajustes del título */
+.app-title {
+  font-size: 40px;
+  color: #de7e1e; /* Naranja pastel */
+  margin: 0; /* Remueve los márgenes del título */
+}
+
 /* Estilos para el contenido principal */
 .home-content {
   display: flex;
@@ -42,6 +68,11 @@
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+  border: 2px solid orange; /* Borde de 2px en color naranja */
+  border-radius: 10px; /* Bordes redondeados (opcional) */
+  padding: 10px; /* Espacio interno en la tarjeta */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave (opcional) */
+  box-sizing: border-box; /* Asegura que el borde esté dentro del tamaño total de la tarjeta */
 }
 
 ion-card img {

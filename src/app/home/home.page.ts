@@ -37,4 +37,15 @@ export class HomePage implements OnInit {
   goToLogin() {
     this.navCtrl.navigateForward('/login');
   }
+
+  // Función para navegar a la página de rutina de ejercicios
+  goToRutinaEjercicios() {
+    this.navCtrl.navigateForward('/rutina-ejercicios'); // Ruta a la página de rutina
+  }
+
+  // Función para navegar a la página de recetas
+  goToRecetas() {
+    this.navCtrl.navigateForward('/recetas'); // Ruta a la página de recetas
+  }
 }
+

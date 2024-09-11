@@ -25,7 +25,11 @@ const routes: Routes = [
   {
     path: 'rutina-ejercicios',
     loadChildren: () => import('./rutina-ejercicios/rutina-ejercicios.module').then(m => m.RutinaEjerciciosPageModule)
+  },  {
+    path: 'recetas',
+    loadChildren: () => import('./recetas/recetas.module').then( m => m.RecetasPageModule)
   }
+
 ];
 
 @NgModule({

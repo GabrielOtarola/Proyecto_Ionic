@@ -44,6 +44,12 @@
 <!-- Contenido principal -->
 <ion-content id="main-content">
   <div class="home-content">
+    <div class="logo-container">
+      <!-- Imagen del logo directamente -->
+      <img src="assets/img/logo.png" alt="Logo" class="logo-img">
+      <h1 class="app-title">Nankurunaisa</h1>
+    </div>
+    
     <ion-card class="custom-card">
       <img alt="Rutina de Ejercicios" src="assets/img/card_ejercicio.jpg" />
       <ion-card-header>
@@ -53,7 +59,7 @@
       <ion-card-content>
         ¿Sabías que solo 30 minutos de ejercicio al día pueden cambiar tu vida? Mejora tu energía, fortalece tu cuerpo, y reduce el estrés con pequeños hábitos. ¡Empieza hoy y siembra bienestar para el futuro!
       </ion-card-content>
-      <ion-button fill="clear">Empieza tu rutina</ion-button>
+      <ion-button fill="clear" (click)="goToRutinaEjercicios()">Empieza tu rutina</ion-button>
     </ion-card>
 
     <ion-card class="custom-card">
@@ -65,7 +71,7 @@
       <ion-card-content>
         Alimentarse bien es el primer paso hacia una vida más plena. Incorporar frutas, verduras y alimentos naturales en tu día a día mejora tu salud física, te llena de energía, y ayuda a prevenir enfermedades. ¡Empieza hoy, tu cuerpo te lo agradecerá mañana!
       </ion-card-content>
-      <ion-button fill="clear">Ver recetas saludables</ion-button>
+      <ion-button fill="clear" (click)="goToRecetas()">Ver recetas saludables</ion-button>
     </ion-card>
 
     <ion-card class="custom-card">
