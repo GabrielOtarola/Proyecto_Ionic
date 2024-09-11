@@ -1,7 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button> <!-- Botón de retroceso -->
+      <!-- Botón personalizado para manejar la navegación -->
+      <ion-button (click)="handleBackButton()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title>Rutina de Ejercicios</ion-title>
   </ion-toolbar>
@@ -18,7 +21,7 @@
         </ion-item>
       </ion-list>
     </div>
-    
+
     <!-- Detalle del ejercicio actual -->
     <div *ngIf="ejercicioActual" class="rutina-detalle">
       <h2>{{ ejercicioActual.nombre }}</h2>
@@ -36,11 +39,22 @@
       <ion-img *ngIf="ejercicioActual.nombre === 'Estiramiento de brazos'" src="assets/img/estiramiento de brazos.gif"></ion-img>
 
       <p>Tiempo restante: {{ tiempoRestante }} segundos</p>
+
+      <!-- Barra de progreso -->
       <ion-progress-bar [value]="progreso"></ion-progress-bar>
-      <ion-button expand="full" (click)="iniciarRutina()" [disabled]="rutinaCompletada" class="orange-button">Iniciar Rutina</ion-button>
-      <ion-button expand="full" (click)="detenerRutina()" [disabled]="!ejercicioActual || rutinaCompletada" class="orange-button">Detener Rutina</ion-button>
+
+      <!-- Botones de control -->
+      <ion-button expand="full" (click)="iniciarRutina()" [disabled]="ejercicioIniciado" class="orange-button">Iniciar Rutina</ion-button>
+      <ion-button expand="full" (click)="pausarRutina()" [disabled]="!ejercicioIniciado || rutinaCompletada || estaPausada" class="orange-button">Pausar Rutina</ion-button>
+      <ion-button expand="full" (click)="reanudarRutina()" [disabled]="!estaPausada" class="orange-button">Reanudar Rutina</ion-button>
+      <ion-button expand="full" (click)="detenerRutina()" [disabled]="!ejercicioIniciado" class="orange-button">Detener Rutina</ion-button>
     </div>
-    
+
+    <!-- Mensaje final -->
+    <div *ngIf="mensajeFinal" class="mensaje-final">
+      <p>{{ mensajeFinal }}</p>
+    </div>
+
     <!-- Mensaje cuando la rutina está completa -->
     <div *ngIf="!ejercicioActual && rutinaCompletada" class="rutina-completada">
       <p>¡Rutina completada!</p>

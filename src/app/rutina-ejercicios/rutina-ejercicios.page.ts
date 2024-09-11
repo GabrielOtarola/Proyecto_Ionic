@@ -1,4 +1,15 @@
 import { Component, OnDestroy } from '@angular/core';
+import { NavController } from '@ionic/angular';
+
+interface Ejercicio {
+  nombre: string;
+  duracion: number;
+}
+
+interface Rutina {
+  nombre: string;
+  ejercicios: Ejercicio[];
+}
 
 @Component({
   selector: 'app-rutina-ejercicios',
@@ -6,93 +17,113 @@ import { Component, OnDestroy } from '@angular/core';
   styleUrls: ['./rutina-ejercicios.page.scss'],
 })
 export class RutinaEjerciciosPage implements OnDestroy {
-  rutinas = [
-    { nombre: 'Rutina de Calentamiento', ejercicios: [
+  rutinas: Rutina[] = [
+    {
+      nombre: 'Rutina de Calentamiento',
+      ejercicios: [
         { nombre: 'Calentamiento', duracion: 30 },
-        { nombre: 'Estiramiento', duracion: 20 }
-      ]
+        { nombre: 'Estiramiento', duracion: 20 },
+      ],
     },
-    { nombre: 'Rutina de Fuerza', ejercicios: [
+    {
+      nombre: 'Rutina de Fuerza',
+      ejercicios: [
         { nombre: 'Flexiones', duracion: 45 },
-        { nombre: 'Sentadillas', duracion: 60 }
-      ]
+        { nombre: 'Sentadillas', duracion: 60 },
+      ],
     },
-    { nombre: 'Rutina de Cardio', ejercicios: [
+    {
+      nombre: 'Rutina de Cardio',
+      ejercicios: [
         { nombre: 'Correr en el lugar', duracion: 60 },
-        { nombre: 'Saltos de tijera', duracion: 45 }
-      ]
+        { nombre: 'Saltos de tijera', duracion: 45 },
+      ],
     },
-    { nombre: 'Rutina de Abdominales', ejercicios: [
+    {
+      nombre: 'Rutina de Abdominales',
+      ejercicios: [
         { nombre: 'Abdominales cortos', duracion: 40 },
-        { nombre: 'Plancha', duracion: 60 }
-      ]
+        { nombre: 'Plancha', duracion: 60 },
+      ],
     },
-    { nombre: 'Rutina de Estiramiento', ejercicios: [
+    {
+      nombre: 'Rutina de Estiramiento',
+      ejercicios: [
         { nombre: 'Estiramiento de piernas', duracion: 30 },
-        { nombre: 'Estiramiento de brazos', duracion: 30 }
-      ]
-    }
+        { nombre: 'Estiramiento de brazos', duracion: 30 },
+      ],
+    },
   ];
 
-  ejercicioActual: any = null;
+  ejercicioActual: Ejercicio | null = null;
   tiempoRestante: number = 0;
   progreso: number = 0;
   temporizador: any;
   rutinaCompletada: boolean = false;
+  estaPausada: boolean = false;
+  ejercicioIniciado: boolean = false;
+  mensajeFinal: string = '';
 
-  seleccionarRutina(rutina: any) {
-    if (!rutina || !rutina.ejercicios || rutina.ejercicios.length === 0) return;
+  constructor(private navCtrl: NavController) {}
 
+  seleccionarRutina(rutina: Rutina) {
     this.ejercicioActual = rutina.ejercicios[0];
-    this.rutinaCompletada = false;
     this.tiempoRestante = this.ejercicioActual.duracion;
-    this.progreso = 0;
+    this.rutinaCompletada = false;
+    this.ejercicioIniciado = false;
+    this.estaPausada = false;
+    this.mensajeFinal = '';
   }
 
   iniciarRutina() {
     if (!this.ejercicioActual) return;
-
-    let indiceEjercicio = 0;
-    const rutina = this.rutinas.find(rutina => rutina.ejercicios.includes(this.ejercicioActual));
-    if (!rutina) return;
-
-    this.ejercicioActual = rutina.ejercicios[indiceEjercicio];
-    this.tiempoRestante = this.ejercicioActual.duracion;
-    this.progreso = 0;
-    this.rutinaCompletada = false;
+    this.ejercicioIniciado = true;
+    this.mensajeFinal = '';
 
     this.temporizador = setInterval(() => {
-      this.tiempoRestante--;
-      this.progreso = (this.ejercicioActual.duracion - this.tiempoRestante) / this.ejercicioActual.duracion;
+      if (!this.estaPausada) {
+        this.tiempoRestante--;
+        this.progreso = (this.ejercicioActual!.duracion - this.tiempoRestante) / this.ejercicioActual!.duracion;
 
-      if (this.tiempoRestante <= 0) {
-        indiceEjercicio++;
-        if (indiceEjercicio < rutina.ejercicios.length) {
-          this.ejercicioActual = rutina.ejercicios[indiceEjercicio];
-          this.tiempoRestante = this.ejercicioActual.duracion;
-          this.progreso = 0;
-        } else {
+        if (this.tiempoRestante <= 0) {
           clearInterval(this.temporizador);
-          this.ejercicioActual = null;
-          this.tiempoRestante = 0;
-          this.progreso = 1;
           this.rutinaCompletada = true;
+          this.ejercicioIniciado = false;
+          this.mensajeFinal = '¡Ejercicio completado!';
         }
       }
     }, 1000);
   }
 
+  pausarRutina() {
+    this.estaPausada = true;
+  }
+
+  reanudarRutina() {
+    this.estaPausada = false;
+  }
+
   detenerRutina() {
     clearInterval(this.temporizador);
+    this.rutinaCompletada = false;
+    this.ejercicioIniciado = false;
+    this.mensajeFinal = 'Ejercicio incompleto';
     this.ejercicioActual = null;
-    this.tiempoRestante = 0;
-    this.progreso = 0;
-    this.rutinaCompletada = true;
   }
 
   volverALista() {
     this.ejercicioActual = null;
     this.rutinaCompletada = false;
+    this.ejercicioIniciado = false;
+    this.mensajeFinal = '';
+  }
+
+  handleBackButton() {
+    if (this.ejercicioActual) {
+      this.volverALista(); // Si estamos en un ejercicio, volvemos a la lista de rutinas
+    } else {
+      this.navCtrl.navigateBack('/home'); // Si estamos en la lista de rutinas, volvemos al home
+    }
   }
 
   ngOnDestroy() {
@@ -101,5 +132,3 @@ export class RutinaEjerciciosPage implements OnDestroy {
     }
   }
 }
-
-
