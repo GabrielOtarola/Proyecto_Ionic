@@ -25,7 +25,6 @@
       <ion-input id="password" formControlName="password" type="password" placeholder="Contraseña"></ion-input>
     </ion-item>
     <p *ngIf="submitted && f['password'].errors?.['required']" class="error-message">La contraseña es obligatoria.</p>
-    <p *ngIf="submitted && f['password'].errors?.['minlength']" class="error-message">La contraseña debe tener al menos 8 caracteres.</p>
     <p *ngIf="submitted && f['password'].errors?.['pattern']" class="error-message">La contraseña debe contener al menos 4 números, 3 caracteres especiales y 1 mayúscula.</p>
 
     <ion-item lines="none">
