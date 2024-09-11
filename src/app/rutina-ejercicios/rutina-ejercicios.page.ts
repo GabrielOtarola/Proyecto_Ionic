@@ -120,10 +120,29 @@ export class RutinaEjerciciosPage implements OnDestroy {
 
   handleBackButton() {
     if (this.ejercicioActual) {
-      this.volverALista(); // Si estamos en un ejercicio, volvemos a la lista de rutinas
+      this.volverALista();
     } else {
-      this.navCtrl.navigateBack('/home'); // Si estamos en la lista de rutinas, volvemos al home
+      this.navCtrl.navigateBack('/home');
     }
+  }
+
+  getImageForExercise(nombre: string): string {
+    const images: { [key: string]: string } = {
+      'Calentamiento': 'assets/img/calentamiento.gif',
+      'Estiramiento': 'assets/img/estiramiento.gif',
+      'Flexiones': 'assets/img/flexiones.gif',
+      'Sentadillas': 'assets/img/sentadillas.gif',
+      'Correr en el lugar': 'assets/img/correr en el lugar.gif',
+      'Saltos de tijera': 'assets/img/saltos-de-tijera.gif',
+      'Abdominales cortos': 'assets/img/abdominales cortos.gif',
+      'Plancha': 'assets/img/plancha.gif',
+      'Estiramiento de piernas': 'assets/img/estiramiento de piernas.gif',
+      'Estiramiento de brazos': 'assets/img/estiramiento de brazos.gif'
+    
+    
+    };
+
+    return images[nombre] || 'assets/img/default.gif';
   }
 
   ngOnDestroy() {

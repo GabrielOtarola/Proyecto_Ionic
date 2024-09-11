@@ -9,6 +9,13 @@
   <ion-header>
     <ion-toolbar>
       <ion-title>Menú</ion-title>
+      <ion-buttons slot="end">
+        <ion-menu-toggle>
+          <ion-button>
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-menu-toggle>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
   <ion-content>
@@ -18,14 +25,17 @@
           <h2>{{ welcomeMessage }}</h2>
         </ion-label>
       </ion-item>
-      <ion-item routerLink="/profile" *ngIf="isLoggedIn">
-        <ion-icon slot="start" name="person"></ion-icon>
-        <ion-label>Perfil</ion-label>
+
+      <ion-item routerLink="/rutina-ejercicios">
+        <ion-icon name="fitness-outline" slot="start"></ion-icon>
+        <ion-label>Rutinas de Ejercicio</ion-label>
       </ion-item>
-      <ion-item routerLink="/settings" *ngIf="isLoggedIn">
-        <ion-icon slot="start" name="settings"></ion-icon>
-        <ion-label>Configuraciones</ion-label>
+
+      <ion-item routerLink="/recetas">
+        <ion-icon name="restaurant-outline" slot="start"></ion-icon>
+        <ion-label>Recetas</ion-label>
       </ion-item>
+
       <ion-item *ngIf="isLoggedIn" (click)="logout()">
         <ion-icon slot="start" name="log-out"></ion-icon>
         <ion-label>Cerrar sesión</ion-label>
@@ -55,7 +65,7 @@
         ¿Sabías que solo 30 minutos de ejercicio al día pueden cambiar tu vida? Mejora tu energía, fortalece tu cuerpo, y reduce el estrés con pequeños hábitos. ¡Empieza hoy y siembra bienestar para el futuro!
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button color="primary" (click)="goToRutinaEjercicios()">Empieza tu rutina</button>
+        <ion-button expand="full" color="primary" (click)="goToRutinaEjercicios()">Empieza tu rutina</ion-button>
       </mat-card-actions>
     </mat-card>
 
@@ -69,7 +79,7 @@
         Alimentarse bien es el primer paso hacia una vida más plena. Incorporar frutas, verduras y alimentos naturales en tu día a día mejora tu salud física, te llena de energía, y ayuda a prevenir enfermedades. ¡Empieza hoy, tu cuerpo te lo agradecerá mañana!
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button color="primary" (click)="goToRecetas()">Ver recetas saludables</button>
+        <ion-button expand="full" color="primary" (click)="goToRecetas()">Ver recetas saludables</ion-button>
       </mat-card-actions>
     </mat-card>
 
@@ -83,7 +93,7 @@
         ¿Sabías que llevar un registro de tus comidas puede ayudarte a lograr una vida más saludable? Controla tus porciones, equilibra tus nutrientes, y mejora tus hábitos alimenticios. Cada pequeño paso cuenta para alcanzar tus metas de bienestar. ¡Empieza hoy!
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button color="primary">Registra tus comidas diarias</button>
+        <ion-button expand="full" color="primary">Registra tus comidas diarias</ion-button>
       </mat-card-actions>
     </mat-card>
   </div>

@@ -1,7 +1,6 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <!-- Botón personalizado para manejar la navegación -->
       <ion-button (click)="handleBackButton()">
         <ion-icon name="arrow-back-outline"></ion-icon>
       </ion-button>
@@ -25,25 +24,10 @@
     <!-- Detalle del ejercicio actual -->
     <div *ngIf="ejercicioActual" class="rutina-detalle">
       <h2>{{ ejercicioActual.nombre }}</h2>
-
-      <!-- Mostrar imagen dependiendo del ejercicio actual -->
-      <ion-img *ngIf="ejercicioActual.nombre === 'Calentamiento'" src="assets/img/calentamiento.gif"></ion-img>
-      <ion-img *ngIf="ejercicioActual.nombre === 'Estiramiento'" src="assets/img/estiramiento.gif"></ion-img>
-      <ion-img *ngIf="ejercicioActual.nombre === 'Flexiones'" src="assets/img/flexiones.gif"></ion-img>
-      <ion-img *ngIf="ejercicioActual.nombre === 'Sentadillas'" src="assets/img/sentadillas.gif"></ion-img>
-      <ion-img *ngIf="ejercicioActual.nombre === 'Correr en el lugar'" src="assets/img/correr en el lugar.gif"></ion-img>
-      <ion-img *ngIf="ejercicioActual.nombre === 'Saltos de tijera'" src="assets/img/saltos de tijera.gif"></ion-img>
-      <ion-img *ngIf="ejercicioActual.nombre === 'Abdominales cortos'" src="assets/img/abdominales cortos.gif"></ion-img>
-      <ion-img *ngIf="ejercicioActual.nombre === 'Plancha'" src="assets/img/plancha.gif"></ion-img>
-      <ion-img *ngIf="ejercicioActual.nombre === 'Estiramiento de piernas'" src="assets/img/estiramiento de piernas.gif"></ion-img>
-      <ion-img *ngIf="ejercicioActual.nombre === 'Estiramiento de brazos'" src="assets/img/estiramiento de brazos.gif"></ion-img>
-
+      <ion-img [src]="getImageForExercise(ejercicioActual.nombre)"></ion-img>
       <p>Tiempo restante: {{ tiempoRestante }} segundos</p>
-
-      <!-- Barra de progreso -->
       <ion-progress-bar [value]="progreso"></ion-progress-bar>
 
-      <!-- Botones de control -->
       <ion-button expand="full" (click)="iniciarRutina()" [disabled]="ejercicioIniciado" class="orange-button">Iniciar Rutina</ion-button>
       <ion-button expand="full" (click)="pausarRutina()" [disabled]="!ejercicioIniciado || rutinaCompletada || estaPausada" class="orange-button">Pausar Rutina</ion-button>
       <ion-button expand="full" (click)="reanudarRutina()" [disabled]="!estaPausada" class="orange-button">Reanudar Rutina</ion-button>
