@@ -1,12 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <!-- Botón del menú alineado al lado izquierdo -->
     <ion-menu-button slot="start"></ion-menu-button>
     <ion-title>Inicio</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<!-- Menú en el lado izquierdo (start) -->
 <ion-menu side="start" contentId="main-content" menuType="reveal">
   <ion-header>
     <ion-toolbar>
@@ -20,7 +18,6 @@
           <h2>{{ welcomeMessage }}</h2>
         </ion-label>
       </ion-item>
-      <!-- Ítems del menú, dependiendo de si el usuario está autenticado o no -->
       <ion-item routerLink="/profile" *ngIf="isLoggedIn">
         <ion-icon slot="start" name="person"></ion-icon>
         <ion-label>Perfil</ion-label>
@@ -41,49 +38,53 @@
   </ion-content>
 </ion-menu>
 
-<!-- Contenido principal -->
 <ion-content id="main-content">
   <div class="home-content">
     <div class="logo-container">
-      <!-- Imagen del logo directamente -->
       <img src="assets/img/logo.png" alt="Logo" class="logo-img">
       <h1 class="app-title">Nankurunaisa</h1>
     </div>
-    
-    <ion-card class="custom-card">
-      <img alt="Rutina de Ejercicios" src="assets/img/card_ejercicio.jpg" />
-      <ion-card-header>
-        <ion-card-title>¡Muévete por tu salud!</ion-card-title>
-        <ion-card-subtitle>El poder del ejercicio</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
+
+    <mat-card class="custom-card">
+      <img mat-card-image src="assets/img/card_ejercicio.jpg" alt="Rutina de Ejercicios">
+      <mat-card-header>
+        <mat-card-title>¡Muévete por tu salud!</mat-card-title>
+        <mat-card-subtitle>El poder del ejercicio</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
         ¿Sabías que solo 30 minutos de ejercicio al día pueden cambiar tu vida? Mejora tu energía, fortalece tu cuerpo, y reduce el estrés con pequeños hábitos. ¡Empieza hoy y siembra bienestar para el futuro!
-      </ion-card-content>
-      <ion-button fill="clear" (click)="goToRutinaEjercicios()">Empieza tu rutina</ion-button>
-    </ion-card>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="goToRutinaEjercicios()">Empieza tu rutina</button>
+      </mat-card-actions>
+    </mat-card>
 
-    <ion-card class="custom-card">
-      <img alt="Alimentos Saludables" src="assets/img/card_alimentos.jpeg" />
-      <ion-card-header>
-        <ion-card-title>¡Elige lo saludable!</ion-card-title>
-        <ion-card-subtitle>La clave de una vida llena de energía</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
+    <mat-card class="custom-card">
+      <img mat-card-image src="assets/img/card_alimentos.jpeg" alt="Alimentos Saludables">
+      <mat-card-header>
+        <mat-card-title>¡Elige lo saludable!</mat-card-title>
+        <mat-card-subtitle>La clave de una vida llena de energía</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
         Alimentarse bien es el primer paso hacia una vida más plena. Incorporar frutas, verduras y alimentos naturales en tu día a día mejora tu salud física, te llena de energía, y ayuda a prevenir enfermedades. ¡Empieza hoy, tu cuerpo te lo agradecerá mañana!
-      </ion-card-content>
-      <ion-button fill="clear" (click)="goToRecetas()">Ver recetas saludables</ion-button>
-    </ion-card>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="goToRecetas()">Ver recetas saludables</button>
+      </mat-card-actions>
+    </mat-card>
 
-    <ion-card class="custom-card">
-      <img alt="Registro de Alimentos Diarios" src="assets/img/registro_alimentos.jpg" />
-      <ion-card-header>
-        <ion-card-title>¡Lleva un control de tus comidas!</ion-card-title>
-        <ion-card-subtitle>Alcanza tus metas registrando lo que comes</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
+    <mat-card class="custom-card">
+      <img mat-card-image src="assets/img/registro_alimentos.jpg" alt="Registro de Alimentos Diarios">
+      <mat-card-header>
+        <mat-card-title>¡Lleva un control de tus comidas!</mat-card-title>
+        <mat-card-subtitle>Alcanza tus metas registrando lo que comes</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
         ¿Sabías que llevar un registro de tus comidas puede ayudarte a lograr una vida más saludable? Controla tus porciones, equilibra tus nutrientes, y mejora tus hábitos alimenticios. Cada pequeño paso cuenta para alcanzar tus metas de bienestar. ¡Empieza hoy!
-      </ion-card-content>
-      <ion-button fill="clear">Registra tus comidas diarias</ion-button>
-    </ion-card>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary">Registra tus comidas diarias</button>
+      </mat-card-actions>
+    </mat-card>
   </div>
 </ion-content>

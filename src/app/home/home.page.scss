@@ -24,42 +24,41 @@
   text-align: center;
 }
 
-/* Estilos personalizados para las tarjetas */
+/* Estilos personalizados para las tarjetas de Material */
 .custom-card {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
   border: 2px solid orange;
   border-radius: 10px;
-  padding: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  min-height: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   margin-bottom: 20px;
 }
 
-/* Ajustes para los botones de las tarjetas */
-ion-button {
-  --background: #de7e1e; /* Color naranja */
-  --border-radius: 8px;
-  --height: 50px;
-  --color: white; /* Cambia el color de la letra a blanco */
+/* Ajustes para los botones dentro de las tarjetas de Material */
+mat-card-actions button {
+  background-color: #de7e1e; /* Fondo naranja */
+  color: rgb(0, 0, 0); /* Letras blancas */
+  border-radius: 8px;
+  height: 50px;
   font-weight: bold;
-  width: 100%;
-  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Transiciones para hover */
+}
+
+/* Efecto hover para el botón */
+mat-card-actions button:hover {
+  background-color: #c76917; /* Un tono más oscuro de naranja */
+  transform: scale(1.05); /* Efecto de agrandamiento */
 }
 
 /* Ajustes para el tamaño de las imágenes dentro de las tarjetas */
-ion-card img {
+mat-card img {
   width: 100%;
   height: auto;
   max-height: 200px;
 }
 
-/* Hacer que las cards se ajusten mejor a dispositivos móviles */
+/* Ajustes para dispositivos móviles */
 @media (max-width: 768px) {
   .custom-card {
     width: 90%;
