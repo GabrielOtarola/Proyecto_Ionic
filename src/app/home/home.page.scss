@@ -1,66 +1,27 @@
-#container {
-  text-align: center;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  color: #8c8c8c;
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
-
 /* Contenedor del logo y título */
 .logo-container {
   display: flex;
-  flex-direction: row; /* Coloca los elementos en fila (horizontalmente) */
-  align-items: center; /* Centra verticalmente el logo y el título */
-  justify-content: flex-start; /* Alinea los elementos al lado izquierdo */
-  margin-bottom: 10px;
-  margin-top: 10px;
-  width: 100%; /* Ocupa todo el ancho disponible */
-  padding-left: 0px; /* Espacio desde el borde izquierdo de la pantalla */
-}  
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 100%;
+}
 
 /* Ajustes del logo */
 .logo-img {
-  width: 100px; /* Ajusta el tamaño del logo */
+  width: 250px;
   height: auto;
-  margin-right: 0px; /* Espacio entre el logo y el título */
+  margin-bottom: -40px;
 }
 
 /* Ajustes del título */
 .app-title {
-  font-size: 40px;
+  font-size: 30px;
   color: #de7e1e; /* Naranja pastel */
-  margin: 0; /* Remueve los márgenes del título */
-}
-
-/* Estilos para el contenido principal */
-.home-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-  gap: 20px;
-  min-height: 180vh; /* Mantener el mínimo de la pantalla visible */
-  overflow-y: scroll; /* Habilitar el scroll cuando hay muchas tarjetas */
+  margin: 0;
+  text-align: center;
 }
 
 /* Estilos personalizados para las tarjetas */
@@ -68,17 +29,34 @@
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
-  border: 2px solid orange; /* Borde de 2px en color naranja */
-  border-radius: 10px; /* Bordes redondeados (opcional) */
-  padding: 10px; /* Espacio interno en la tarjeta */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave (opcional) */
-  box-sizing: border-box; /* Asegura que el borde esté dentro del tamaño total de la tarjeta */
+  border: 2px solid orange;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
+/* Ajustes para los botones de las tarjetas */
+ion-button {
+  --background: #de7e1e; /* Color naranja */
+  --border-radius: 8px;
+  --height: 50px;
+  --color: white; /* Cambia el color de la letra a blanco */
+  font-weight: bold;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Ajustes para el tamaño de las imágenes dentro de las tarjetas */
 ion-card img {
   width: 100%;
   height: auto;
-  max-height: 200px; /* Ajustar el tamaño máximo de la imagen dentro de la tarjeta */
+  max-height: 200px;
 }
 
 /* Hacer que las cards se ajusten mejor a dispositivos móviles */
@@ -86,20 +64,4 @@ ion-card img {
   .custom-card {
     width: 90%;
   }
-}
-
-ion-content {
-  --padding-bottom: 16px;
-  overflow-y: auto; /* Habilitar el scroll en el contenido principal */
-}
-
-/* Estilo del menú lateral */
-ion-menu {
-  --width: 280px;
-}
-
-ion-menu h2 {
-  font-size: 18px;
-  color: #4a90e2;
-  margin: 16px;
 }
