@@ -50,5 +50,11 @@ export class LoginPage implements AfterViewInit {
         }
       }
     });
+
+    // Redirección con Google (básica)
+    $('.google-login-button').click(() => {
+      const googleUser = 'Usuario de Google';
+      this.navCtrl.navigateForward(`/home?username=${googleUser}`);
+    });
   }
 }
