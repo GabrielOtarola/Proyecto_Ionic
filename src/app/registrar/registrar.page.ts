@@ -26,8 +26,8 @@ export class RegistrarPage implements AfterViewInit {
       // Obtener los valores de los campos
       const username = $('#username').val() as string;
       const email = $('#email').val() as string;
-      const password = $('#password').val() as string;
-      const confirmPassword = $('#confirmPassword').val() as string;
+      const password = ($('#password').val() as string).trim(); // Usar trim para eliminar espacios en blanco
+      const confirmPassword = ($('#confirmPassword').val() as string).trim(); // Usar trim para eliminar espacios en blanco
       const age = Number($('#age').val()); // Convertir a número
       const height = Number($('#height').val()); // Convertir a número
       const weight = Number($('#weight').val()); // Convertir a número
@@ -48,10 +48,10 @@ export class RegistrarPage implements AfterViewInit {
         isValid = false;
       }
 
-      // Validación de contraseña (al menos 4 números, 3 caracteres y 1 mayúscula)
-      const passwordPattern = /^(?=.*[A-Z])(?=.*\d{4,}).{8,}$/;
+      // Validación de contraseña: 1 mayúscula, al menos 3 caracteres y 4 números
+      const passwordPattern = /^(?=.*[A-Z])(?=.*[a-zA-Z]{3,})(?=.*\d{4,}).{8,}$/;
       if (!password || !passwordPattern.test(password)) {
-        $('#passwordError').text('La contraseña debe contener al menos 4 números, 3 caracteres y 1 mayúscula.');
+        $('#passwordError').text('La contraseña debe contener al menos 1 mayúscula, 3 caracteres y 4 números.');
         isValid = false;
       }
 
