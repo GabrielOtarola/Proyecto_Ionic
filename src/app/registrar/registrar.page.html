@@ -8,69 +8,59 @@
 </ion-header>
 
 <ion-content class="register-content">
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <form id="registerForm">
     <ion-item lines="none">
-      <ion-input id="username" formControlName="username" type="text" placeholder="Nombre de Usuario"></ion-input>
+      <ion-input id="username" name="username" type="text" placeholder="Nombre de Usuario"></ion-input>
     </ion-item>
-    <p *ngIf="submitted && f['username'].errors?.['required']" class="error-message">El nombre de usuario es obligatorio.</p>
-    <p *ngIf="submitted && f['username'].errors?.['pattern']" class="error-message">Solo se permiten letras en el nombre de usuario.</p>
+    <p class="error-message" id="usernameError"></p>
 
     <ion-item lines="none">
-      <ion-input id="email" formControlName="email" type="email" placeholder="Correo Electrónico"></ion-input>
+      <ion-input id="email" name="email" type="email" placeholder="Correo Electrónico"></ion-input>
     </ion-item>
-    <p *ngIf="submitted && f['email'].errors?.['required']" class="error-message">El correo electrónico es obligatorio.</p>
-    <p *ngIf="submitted && f['email'].errors?.['email']" class="error-message">Ingresa un correo electrónico válido.</p>
+    <p class="error-message" id="emailError"></p>
 
     <ion-item lines="none">
-      <ion-input id="password" formControlName="password" type="password" placeholder="Contraseña"></ion-input>
+      <ion-input id="password" name="password" type="password" placeholder="Contraseña"></ion-input>
     </ion-item>
-    <p *ngIf="submitted && f['password'].errors?.['required']" class="error-message">La contraseña es obligatoria.</p>
-    <p *ngIf="submitted && f['password'].errors?.['pattern']" class="error-message">La contraseña debe contener al menos 4 números, 3 caracteres especiales y 1 mayúscula.</p>
+    <p class="error-message" id="passwordError"></p>
 
     <ion-item lines="none">
-      <ion-input id="confirmPassword" formControlName="confirmPassword" type="password" placeholder="Confirmar Contraseña"></ion-input>
+      <ion-input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirmar Contraseña"></ion-input>
     </ion-item>
-    <p *ngIf="submitted && f['confirmPassword'].errors?.['required']" class="error-message">La confirmación de contraseña es obligatoria.</p>
-    <p *ngIf="submitted && registerForm.errors?.['mismatch']" class="error-message">Las contraseñas no coinciden.</p>
+    <p class="error-message" id="confirmPasswordError"></p>
 
     <ion-item lines="none">
-      <ion-input id="age" formControlName="age" type="number" placeholder="Edad"></ion-input>
+      <ion-input id="age" name="age" type="number" placeholder="Edad"></ion-input>
     </ion-item>
-    <p *ngIf="submitted && f['age'].errors?.['required']" class="error-message">La edad es obligatoria.</p>
-    <p *ngIf="submitted && f['age'].errors?.['min']" class="error-message">La edad mínima es 14 años.</p>
-    <p *ngIf="submitted && f['age'].errors?.['max']" class="error-message">La edad máxima es 100 años.</p>
+    <p class="error-message" id="ageError"></p>
 
     <ion-item lines="none">
-      <ion-input id="height" formControlName="height" type="number" placeholder="Altura (cm)"></ion-input>
+      <ion-input id="height" name="height" type="number" placeholder="Altura (cm)"></ion-input>
     </ion-item>
-    <p *ngIf="submitted && f['height'].errors?.['required']" class="error-message">La altura es obligatoria.</p>
-    <p *ngIf="submitted && f['height'].errors?.['min']" class="error-message">La altura mínima es 100 cm.</p>
-    <p *ngIf="submitted && f['height'].errors?.['max']" class="error-message">La altura máxima es 280 cm.</p>
+    <p class="error-message" id="heightError"></p>
 
     <ion-item lines="none">
-      <ion-input id="weight" formControlName="weight" type="number" placeholder="Peso (kg)"></ion-input>
+      <ion-input id="weight" name="weight" type="number" placeholder="Peso (kg)"></ion-input>
     </ion-item>
-    <p *ngIf="submitted && f['weight'].errors?.['required']" class="error-message">El peso es obligatorio.</p>
-    <p *ngIf="submitted && f['weight'].errors?.['min']" class="error-message">El peso mínimo es 30 kg.</p>
-    <p *ngIf="submitted && f['weight'].errors?.['max']" class="error-message">El peso máximo es 200 kg.</p>
+    <p class="error-message" id="weightError"></p>
 
     <ion-item lines="none">
-      <ion-select id="gender" formControlName="gender" placeholder="Género">
+      <ion-select id="gender" name="gender" placeholder="Género">
         <ion-select-option value="male">Masculino</ion-select-option>
         <ion-select-option value="female">Femenino</ion-select-option>
         <ion-select-option value="other">Otro</ion-select-option>
       </ion-select>
     </ion-item>
-    <p *ngIf="submitted && f['gender'].errors?.['required']" class="error-message">Selecciona un género.</p>
+    <p class="error-message" id="genderError"></p>
 
     <ion-item lines="none">
-      <ion-select id="activityLevel" formControlName="activityLevel" placeholder="Nivel de Actividad">
+      <ion-select id="activityLevel" name="activityLevel" placeholder="Nivel de Actividad">
         <ion-select-option value="low">Bajo</ion-select-option>
         <ion-select-option value="medium">Medio</ion-select-option>
         <ion-select-option value="high">Alto</ion-select-option>
       </ion-select>
     </ion-item>
-    <p *ngIf="submitted && f['activityLevel'].errors?.['required']" class="error-message">Selecciona un nivel de actividad.</p>
+    <p class="error-message" id="activityLevelError"></p>
 
     <ion-button id="submitButton" expand="block" type="submit" class="register-button">Registrarse</ion-button>
   </form>

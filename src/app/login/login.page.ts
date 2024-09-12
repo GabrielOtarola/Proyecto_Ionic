@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, AfterViewInit } from '@angular/core';
+import * as $ from 'jquery';
 import { NavController } from '@ionic/angular';
 import { NavegextraService } from '../services/navegextra.service';
 
@@ -8,35 +8,47 @@ import { NavegextraService } from '../services/navegextra.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage {
-  loginForm: FormGroup;
+export class LoginPage implements AfterViewInit {
   errorMessage = '';
 
   constructor(
-    private fb: FormBuilder,
     private navCtrl: NavController,
     private navegextraService: NavegextraService  // Inyectar el servicio
-  ) {
-    this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]]
-    });
-  }
+  ) { }
 
-  // Verificación de credenciales al enviar el formulario
-  onSubmit() {
-    if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value;
-      const storedUser = this.navegextraService.getUserData();
+  ngAfterViewInit() {
+    // Configurar la validación del formulario con jQuery
+    $('#loginForm').submit((event) => {
+      event.preventDefault(); // Prevenir el envío del formulario por defecto
+      $('.error-message').text(''); // Limpiar mensajes de error
 
-      // Verificación de los datos almacenados en NavegextraService
-      if (storedUser && storedUser.username === username && storedUser.password === password) {
-        this.navCtrl.navigateForward(`/home?username=${username}`);
-      } else {
-        this.errorMessage = 'Usuario o contraseña incorrectos';
+      // Obtener los valores del formulario
+      const username = $('#username').val() as string;
+      const password = $('#password').val() as string;
+
+      let isValid = true;
+
+      // Validación de nombre de usuario
+      if (!username || username.trim() === '') {
+        $('#usernameError').text('El nombre de usuario es obligatorio.');
+        isValid = false;
       }
-    } else {
-      this.errorMessage = 'Formulario inválido';
-    }
+
+      // Validación de contraseña
+      if (!password || password.trim() === '') {
+        $('#passwordError').text('La contraseña es obligatoria.');
+        isValid = false;
+      }
+
+      // Verificación de credenciales
+      if (isValid) {
+        const storedUser = this.navegextraService.getUserData();
+        if (storedUser && storedUser.username === username && storedUser.password === password) {
+          this.navCtrl.navigateForward(`/home?username=${username}`);
+        } else {
+          $('#formError').text('Usuario o contraseña incorrectos.');
+        }
+      }
+    });
   }
 }

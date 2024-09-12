@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as $ from 'jquery';
 import { Router } from '@angular/router';
 import { NavegextraService } from '../services/navegextra.service';
 
@@ -9,53 +9,107 @@ import { NavegextraService } from '../services/navegextra.service';
   styleUrls: ['./registrar.page.scss'],
 })
 export class RegistrarPage implements AfterViewInit {
-  registerForm: FormGroup;
-  submitted = false;
 
   constructor(
-    private fb: FormBuilder,
     private router: Router,
-    private navegextraService: NavegextraService  // Inyectar el servicio
-  ) {
-    this.registerForm = this.fb.group({
-      username: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.pattern('^(?=.*[A-Z])(?=.*[0-9]{4,})(?=.*[!@#\\$%\\^&\\*]{3,}).*$')
-      ]],
-      confirmPassword: ['', Validators.required],
-      age: ['', [Validators.required, Validators.min(14), Validators.max(100), Validators.pattern('^[0-9]+$')]],
-      height: ['', [Validators.required, Validators.min(100), Validators.max(280), Validators.pattern('^[0-9]+$')]],
-      weight: ['', [Validators.required, Validators.min(30), Validators.max(200), Validators.pattern('^[0-9]+$')]],
-      gender: ['', Validators.required],
-      activityLevel: ['', Validators.required],
-    }, { validator: this.passwordMatchValidator });
+    private navegextraService: NavegextraService // Inyectar el servicio
+  ) { }
+
+  ngAfterViewInit() {
+    // Configurar el evento de validación en el formulario
+    $('#registerForm').submit((event) => {
+      event.preventDefault(); // Evitar el envío del formulario
+
+      // Limpiar mensajes de error
+      $('.error-message').text('');
+
+      // Obtener los valores de los campos
+      const username = $('#username').val() as string;
+      const email = $('#email').val() as string;
+      const password = $('#password').val() as string;
+      const confirmPassword = $('#confirmPassword').val() as string;
+      const age = Number($('#age').val()); // Convertir a número
+      const height = Number($('#height').val()); // Convertir a número
+      const weight = Number($('#weight').val()); // Convertir a número
+      const gender = $('#gender').val() as string;
+      const activityLevel = $('#activityLevel').val() as string;
+
+      let isValid = true;
+
+      // Validación de nombre de usuario
+      if (!username || !/^[a-zA-Z]+$/.test(username)) {
+        $('#usernameError').text('El nombre de usuario es obligatorio y solo debe contener letras.');
+        isValid = false;
+      }
+
+      // Validación de email
+      if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+        $('#emailError').text('Ingresa un correo electrónico válido.');
+        isValid = false;
+      }
+
+      // Validación de contraseña (al menos 4 números, 3 caracteres y 1 mayúscula)
+      const passwordPattern = /^(?=.*[A-Z])(?=.*\d{4,}).{8,}$/;
+      if (!password || !passwordPattern.test(password)) {
+        $('#passwordError').text('La contraseña debe contener al menos 4 números, 3 caracteres y 1 mayúscula.');
+        isValid = false;
+      }
+
+      // Validación de confirmación de contraseña
+      if (password !== confirmPassword) {
+        $('#confirmPasswordError').text('Las contraseñas no coinciden.');
+        isValid = false;
+      }
+
+      // Validación de edad
+      if (!age || age < 14 || age > 100) {
+        $('#ageError').text('La edad debe estar entre 14 y 100 años.');
+        isValid = false;
+      }
+
+      // Validación de altura
+      if (!height || height < 100 || height > 280) {
+        $('#heightError').text('La altura debe estar entre 100 cm y 280 cm.');
+        isValid = false;
+      }
+
+      // Validación de peso
+      if (!weight || weight < 30 || weight > 200) {
+        $('#weightError').text('El peso debe estar entre 30 kg y 200 kg.');
+        isValid = false;
+      }
+
+      // Validación de género
+      if (!gender) {
+        $('#genderError').text('Selecciona un género.');
+        isValid = false;
+      }
+
+      // Validación de nivel de actividad
+      if (!activityLevel) {
+        $('#activityLevelError').text('Selecciona un nivel de actividad.');
+        isValid = false;
+      }
+
+      // Si todo es válido, procede a registrar
+      if (isValid) {
+        const formData = {
+          username,
+          email,
+          password,
+          age,
+          height,
+          weight,
+          gender,
+          activityLevel,
+        };
+
+        // Guardar datos del usuario en NavegextraService
+        this.navegextraService.setUserData(formData);
+
+        // Redirigir al login después del registro
+        this.router.navigate(['/login'], { queryParams: { registered: true } });
+      }
+    });
   }
-
-  ngAfterViewInit() {}
-
-  // Verifica si las contraseñas coinciden
-  passwordMatchValidator(frm: FormGroup) {
-    return frm.get('password')?.value === frm.get('confirmPassword')?.value ? null : { mismatch: true };
-  }
-
-  // Manejo del formulario de registro
-  onSubmit() {
-    this.submitted = true;
-    if (this.registerForm.valid) {
-      const formData = this.registerForm.value;
-
-      // Guardar datos del usuario en NavegextraService
-      this.navegextraService.setUserData(formData);
-
-      // Redirigir al login después del registro
-      this.router.navigate(['/login'], { queryParams: { registered: true } });
-    } else {
-      console.log('Formulario inválido');
-    }
-  }
-
-  get f() { return this.registerForm.controls; }
 }
