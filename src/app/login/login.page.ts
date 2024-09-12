@@ -53,8 +53,17 @@ export class LoginPage implements AfterViewInit {
 
     // Redirección con Google (básica)
     $('.google-login-button').click(() => {
-      const googleUser = 'Usuario de Google';
-      this.navCtrl.navigateForward(`/home?username=${googleUser}`);
+      const googleUser = {
+        username: 'Usuario de Google',
+        email: 'usuario_google@gmail.com', // Datos simulados
+        provider: 'Google'
+      };
+
+      // Guardar los datos en el NavegextraService
+      this.navegextraService.setUserData(googleUser);
+
+      // Navegar a la página principal
+      this.navCtrl.navigateForward(`/home?username=${googleUser.username}`);
     });
   }
 }
