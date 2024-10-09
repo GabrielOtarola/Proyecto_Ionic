@@ -19,3 +19,4 @@ import { RegistrarPage } from './registrar.page';
   declarations: [RegistrarPage]
 })
 export class RegistrarPageModule {}
+

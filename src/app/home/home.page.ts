@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Configura el mensaje de bienvenida cuando se inicia la página
     this.setWelcomeMessage();
   }
 
@@ -30,6 +31,7 @@ export class HomePage implements OnInit {
       if (username) {
         this.isLoggedIn = true;
         this.welcomeMessage = `Bienvenido, ${username}`;
+
         // Llamar al modal de bienvenida después de iniciar sesión
         await this.presentWelcomeModal(username);
       } else {
@@ -39,30 +41,35 @@ export class HomePage implements OnInit {
     });
   }
 
+  // Función para mostrar el modal de bienvenida
   async presentWelcomeModal(username: string) {
     const modal = await this.modalController.create({
-      component: BienvenidaModalComponent,
-      cssClass: 'my-custom-class', // Si necesitas personalizar el modal
+      component: BienvenidaModalComponent, // Componente del modal
+      cssClass: 'my-custom-class', // Clase personalizada para el modal
       componentProps: {
         username: username // Pasar el nombre de usuario al modal
       }
     });
-    return await modal.present();
+    return await modal.present(); // Presenta el modal
   }
 
+  // Función para cerrar sesión y redirigir al login
   logout() {
-    this.isLoggedIn = false;
-    this.navCtrl.navigateRoot('/login');
+    this.isLoggedIn = false; // Establece el estado como no logueado
+    this.navCtrl.navigateRoot('/login'); // Redirige a la página de login
   }
 
+  // Función para navegar a la página de login
   goToLogin() {
     this.navCtrl.navigateForward('/login');
   }
 
+  // Función para navegar a la página de rutina de ejercicios
   goToRutinaEjercicios() {
     this.navCtrl.navigateForward('/rutina-ejercicios');
   }
 
+  // Función para navegar a la página de recetas
   goToRecetas() {
     this.navCtrl.navigateForward('/recetas');
   }

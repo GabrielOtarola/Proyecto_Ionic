@@ -153,7 +153,7 @@ export class RutinaEjerciciosPage implements OnDestroy {
       'Flexiones': 'assets/img/flexiones.gif',
       'Sentadillas': 'assets/img/sentadillas.gif',
       'Correr en el lugar': 'assets/img/correr en el lugar.gif',
-      'Saltos de tijera': 'assets/img/saltos-de-tijera.gif',
+      'Saltos de tijera': 'assets/img/saltos de tijera.gif',
       'Abdominales cortos': 'assets/img/abdominales cortos.gif',
       'Plancha': 'assets/img/plancha.gif',
       'Estiramiento de piernas': 'assets/img/estiramiento de piernas.gif',

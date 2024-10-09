@@ -1,7 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import * as $ from 'jquery';
 import { NavController } from '@ionic/angular';
-import { NavegextraService } from '../services/navegextra.service';
 
 @Component({
   selector: 'app-login',
@@ -12,12 +11,34 @@ export class LoginPage implements AfterViewInit {
   errorMessage = '';
 
   constructor(
-    private navCtrl: NavController,
-    private navegextraService: NavegextraService  // Inyectar el servicio
+    private navCtrl: NavController
   ) { }
 
   ngAfterViewInit() {
-    // Configurar la validación del formulario con jQuery
+    // Validación del nombre de usuario en tiempo real: solo letras
+    $('#username').on('input', function () {
+      const username = $(this).val() as string;
+      const regex = /^[A-Za-z]+$/; // Solo letras
+      if (!regex.test(username)) {
+        $('#usernameError').text('El nombre de usuario solo debe contener letras.');
+      } else {
+        $('#usernameError').text('');
+      }
+    });
+
+    // Validación de la contraseña en tiempo real
+    $('#password').on('input', function () {
+      const password = $(this).val() as string;
+      const passwordPattern = /^(?=.*[A-Z])(?=.*[a-zA-Z]{3,})(?=.*\d{4,}).{8,}$/;
+
+      if (!passwordPattern.test(password)) {
+        $('#passwordError').text('La contraseña debe tener al menos 1 mayúscula, 3 letras y 4 números.');
+      } else {
+        $('#passwordError').text('');
+      }
+    });
+
+    // Validación completa al enviar el formulario
     $('#loginForm').submit((event) => {
       event.preventDefault(); // Prevenir el envío del formulario por defecto
       $('.error-message').text(''); // Limpiar mensajes de error
@@ -28,26 +49,30 @@ export class LoginPage implements AfterViewInit {
 
       let isValid = true;
 
-      // Validación de nombre de usuario
-      if (!username || username.trim() === '') {
-        $('#usernameError').text('El nombre de usuario es obligatorio.');
+      // Validación de nombre de usuario (solo letras)
+      const regex = /^[A-Za-z]+$/;
+      if (!username || username.trim() === '' || !regex.test(username)) {
+        $('#usernameError').text('El nombre de usuario es obligatorio y solo debe contener letras.');
         isValid = false;
       }
 
-      // Validación de contraseña
-      if (!password || password.trim() === '') {
-        $('#passwordError').text('La contraseña es obligatoria.');
+      // Validación de contraseña (patrón)
+      const passwordPattern = /^(?=.*[A-Z])(?=.*[a-zA-Z]{3,})(?=.*\d{4,}).{8,}$/;
+      if (!password || password.trim() === '' || !passwordPattern.test(password)) {
+        $('#passwordError').text('La contraseña debe tener al menos 1 mayúscula, 3 letras y 4 números.');
         isValid = false;
       }
 
-      // Verificación de credenciales
+      // Si todas las validaciones son correctas
       if (isValid) {
-        const storedUser = this.navegextraService.getUserData();
-        if (storedUser && storedUser.username === username && storedUser.password === password) {
-          this.navCtrl.navigateForward(`/home?username=${username}`);
-        } else {
-          $('#formError').text('Usuario o contraseña incorrectos.');
-        }
+        // Limpiar el formulario
+        (document.getElementById('loginForm') as HTMLFormElement).reset();
+
+        // Redirigir al usuario a la página de inicio
+        this.navCtrl.navigateForward(`/home?username=${username}`);
+      } else {
+        // Mostrar un mensaje de error si los campos son inválidos
+        $('#formError').text('Por favor ingresa un nombre de usuario y una contraseña válidos.');
       }
     });
 
@@ -59,11 +84,14 @@ export class LoginPage implements AfterViewInit {
         provider: 'Google'
       };
 
-      // Guardar los datos en el NavegextraService
-      this.navegextraService.setUserData(googleUser);
-
-      // Navegar a la página principal
+      // Navegar a la página principal con los datos del usuario de Google
       this.navCtrl.navigateForward(`/home?username=${googleUser.username}`);
     });
   }
+
+  // Método para cerrar sesión y simplemente redirigir al login
+  logout() {
+    this.navCtrl.navigateRoot('/login'); // Redirige al login sin guardar nada
+  }
 }
+

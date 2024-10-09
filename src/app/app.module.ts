@@ -6,7 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { NavegextraService } from './services/navegextra.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Importación del módulo de animaciones
 import { BienvenidaModalComponent } from './bienvenida-modal/bienvenida-modal.component'; // Importación del componente modal
 
@@ -21,7 +20,6 @@ import { BienvenidaModalComponent } from './bienvenida-modal/bienvenida-modal.co
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    NavegextraService, // Añadir NavegextraService a los proveedores
   ],
   bootstrap: [AppComponent],
 })

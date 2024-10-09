@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #ffffff; /* Fondo blanco */
+  background-color: #ffffff;
 
   form {
     width: 100%;
@@ -23,7 +23,7 @@
       --border-width: 0px;
 
       ion-input, ion-select {
-        border: 0.5px solid #de7e1e; /* Borde naranjo */
+        border: 0.5px solid #de7e1e;
         border-radius: 8px;
         padding: 1px;
         background: #ffffff;
@@ -36,12 +36,12 @@
       }
 
       ion-input:focus, ion-select:focus {
-        box-shadow: 0 0 5px rgba(222, 126, 30, 0.5); /* Sombra naranjo al enfocarse */
+        box-shadow: 0 0 5px rgba(222, 126, 30, 0.5);
       }
     }
 
     .register-button {
-      --background: #de7e1e; /* Naranjo para el botón */
+      --background: #de7e1e;
       --border-radius: 8px;
       --height: 50px;
       margin-top: 20px;
@@ -50,17 +50,11 @@
     }
 
     .register-button:hover {
-      background-color: #e68a2e; /* Efecto hover en los botones */
+      background-color: #e68a2e;
     }
 
     .error-message {
       color: #e74c3c;
-      font-size: 14px;
-      margin-top: 5px;
-    }
-
-    .success-message {
-      color: #2ecc71;
       font-size: 14px;
       margin-top: 5px;
     }
