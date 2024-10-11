@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router'; // Importa ActivatedRoute
-import { BienvenidaModalComponent } from '../bienvenida-modal/bienvenida-modal.component'; // Importa el modal
+import { ActivatedRoute } from '@angular/router'; 
+import { BienvenidaModalComponent } from '../bienvenida-modal/bienvenida-modal.component'; 
 
 @Component({
   selector: 'app-home',
@@ -14,25 +14,20 @@ export class HomePage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
-    private activatedRoute: ActivatedRoute, // Inyecta ActivatedRoute
-    private modalController: ModalController // Inyecta ModalController para manejar el modal
+    private activatedRoute: ActivatedRoute,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
-    // Configura el mensaje de bienvenida cuando se inicia la página
     this.setWelcomeMessage();
   }
 
   async setWelcomeMessage() {
-    // Obtiene el parámetro 'username' desde la URL
     this.activatedRoute.queryParams.subscribe(async params => {
       const username = params['username'];
-
       if (username) {
         this.isLoggedIn = true;
         this.welcomeMessage = `Bienvenido, ${username}`;
-
-        // Llamar al modal de bienvenida después de iniciar sesión
         await this.presentWelcomeModal(username);
       } else {
         this.isLoggedIn = false;
@@ -41,35 +36,29 @@ export class HomePage implements OnInit {
     });
   }
 
-  // Función para mostrar el modal de bienvenida
   async presentWelcomeModal(username: string) {
     const modal = await this.modalController.create({
-      component: BienvenidaModalComponent, // Componente del modal
-      cssClass: 'my-custom-class', // Clase personalizada para el modal
-      componentProps: {
-        username: username // Pasar el nombre de usuario al modal
-      }
+      component: BienvenidaModalComponent,
+      cssClass: 'my-custom-class',
+      componentProps: { username }
     });
-    return await modal.present(); // Presenta el modal
+    return await modal.present();
   }
 
-  // Función para cerrar sesión y redirigir al login
-  logout() {
-    this.isLoggedIn = false; // Establece el estado como no logueado
-    this.navCtrl.navigateRoot('/login'); // Redirige a la página de login
-  }
-
-  // Función para navegar a la página de login
+  // Agregar este método para solucionar el error
   goToLogin() {
     this.navCtrl.navigateForward('/login');
   }
 
-  // Función para navegar a la página de rutina de ejercicios
+  logout() {
+    this.isLoggedIn = false;
+    this.navCtrl.navigateRoot('/login');
+  }
+
   goToRutinaEjercicios() {
     this.navCtrl.navigateForward('/rutina-ejercicios');
   }
 
-  // Función para navegar a la página de recetas
   goToRecetas() {
     this.navCtrl.navigateForward('/recetas');
   }

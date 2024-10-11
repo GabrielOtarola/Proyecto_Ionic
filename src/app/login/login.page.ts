@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import * as $ from 'jquery';
 import { NavController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';  // Para recibir los queryParams
 
 @Component({
   selector: 'app-login',
@@ -8,14 +9,23 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements AfterViewInit {
-  errorMessage = '';
+  registeredUsername: string = ''; // Almacenar el nombre de usuario registrado
+  registeredPassword: string = ''; // Almacenar la contraseña registrada
 
   constructor(
-    private navCtrl: NavController
-  ) { }
+    private navCtrl: NavController,
+    private route: ActivatedRoute // Para recibir los `queryParams`
+  ) {}
 
   ngAfterViewInit() {
-    // Validación del nombre de usuario en tiempo real: solo letras
+    // Recibir los `queryParams` del registro
+    this.route.queryParams.subscribe(params => {
+      this.registeredUsername = params['username'] || '';
+      this.registeredPassword = params['password'] || '';
+      console.log('Datos recibidos del registro:', this.registeredUsername, this.registeredPassword);
+    });
+
+    // Validación de campos en tiempo real (igual que antes)
     $('#username').on('input', function () {
       const username = $(this).val() as string;
       const regex = /^[A-Za-z]+$/; // Solo letras
@@ -26,7 +36,6 @@ export class LoginPage implements AfterViewInit {
       }
     });
 
-    // Validación de la contraseña en tiempo real
     $('#password').on('input', function () {
       const password = $(this).val() as string;
       const passwordPattern = /^(?=.*[A-Z])(?=.*[a-zA-Z]{3,})(?=.*\d{4,}).{8,}$/;
@@ -46,32 +55,28 @@ export class LoginPage implements AfterViewInit {
       // Obtener los valores del formulario
       const username = $('#username').val() as string;
       const password = $('#password').val() as string;
-
       let isValid = true;
 
-      // Validación de nombre de usuario (solo letras)
-      const regex = /^[A-Za-z]+$/;
-      if (!username || username.trim() === '' || !regex.test(username)) {
+      // Validaciones básicas (igual que antes)
+      if (!username || username.trim() === '' || !/^[A-Za-z]+$/.test(username)) {
         $('#usernameError').text('El nombre de usuario es obligatorio y solo debe contener letras.');
         isValid = false;
       }
 
-      // Validación de contraseña (patrón)
-      const passwordPattern = /^(?=.*[A-Z])(?=.*[a-zA-Z]{3,})(?=.*\d{4,}).{8,}$/;
-      if (!password || password.trim() === '' || !passwordPattern.test(password)) {
+      if (!password || password.trim() === '' || !/^(?=.*[A-Z])(?=.*[a-zA-Z]{3,})(?=.*\d{4,}).{8,}$/.test(password)) {
         $('#passwordError').text('La contraseña debe tener al menos 1 mayúscula, 3 letras y 4 números.');
         isValid = false;
       }
 
-      // Si todas las validaciones son correctas
       if (isValid) {
-        // Limpiar el formulario
-        (document.getElementById('loginForm') as HTMLFormElement).reset();
-
-        // Redirigir al usuario a la página de inicio
-        this.navCtrl.navigateForward(`/home?username=${username}`);
+        // Validar que las credenciales coincidan con las registradas
+        if (username === this.registeredUsername && password === this.registeredPassword) {
+          alert('Login exitoso');
+          this.navCtrl.navigateForward(`/home?username=${username}`); // Redirigir a la página principal
+        } else {
+          $('#formError').text('Nombre de usuario o contraseña incorrectos.');
+        }
       } else {
-        // Mostrar un mensaje de error si los campos son inválidos
         $('#formError').text('Por favor ingresa un nombre de usuario y una contraseña válidos.');
       }
     });
@@ -89,9 +94,8 @@ export class LoginPage implements AfterViewInit {
     });
   }
 
-  // Método para cerrar sesión y simplemente redirigir al login
+  // Método para cerrar sesión
   logout() {
-    this.navCtrl.navigateRoot('/login'); // Redirige al login sin guardar nada
+    this.navCtrl.navigateRoot('/login'); // Redirigir al login
   }
 }
-
