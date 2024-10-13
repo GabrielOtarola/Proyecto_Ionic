@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router'; 
-import { BienvenidaModalComponent } from '../bienvenida-modal/bienvenida-modal.component'; 
+import { ActivatedRoute } from '@angular/router';
+import { BienvenidaModalComponent } from '../bienvenida-modal/bienvenida-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +11,7 @@ import { BienvenidaModalComponent } from '../bienvenida-modal/bienvenida-modal.c
 export class HomePage implements OnInit {
   welcomeMessage: string = '';
   isLoggedIn: boolean = false;
+  username: string = ''; // Almacena el nombre del usuario
 
   constructor(
     private navCtrl: NavController,
@@ -23,19 +24,20 @@ export class HomePage implements OnInit {
   }
 
   async setWelcomeMessage() {
-    this.activatedRoute.queryParams.subscribe(async params => {
-      const username = params['username'];
-      if (username) {
-        this.isLoggedIn = true;
-        this.welcomeMessage = `Bienvenido, ${username}`;
-        await this.presentWelcomeModal(username);
-      } else {
-        this.isLoggedIn = false;
-        this.welcomeMessage = 'Bienvenido';
-      }
-    });
+    // Verificamos si el usuario está logueado leyendo desde localStorage
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      this.isLoggedIn = true;
+      this.username = storedUsername;
+      this.welcomeMessage = `Bienvenido, ${this.username}`;
+      await this.presentWelcomeModal(this.username); // Mostrar el modal de bienvenida si es la primera vez
+    } else {
+      this.isLoggedIn = false;
+      this.welcomeMessage = 'Bienvenido';
+    }
   }
 
+  // Mostrar un modal de bienvenida al usuario
   async presentWelcomeModal(username: string) {
     const modal = await this.modalController.create({
       component: BienvenidaModalComponent,
@@ -45,20 +47,24 @@ export class HomePage implements OnInit {
     return await modal.present();
   }
 
-  // Agregar este método para solucionar el error
+  // Navegar a la página de inicio de sesión
   goToLogin() {
-    this.navCtrl.navigateForward('/login');
+    this.navCtrl.navigateForward('/login1');
   }
 
+  // Cerrar sesión y permanecer en la página actual
   logout() {
     this.isLoggedIn = false;
-    this.navCtrl.navigateRoot('/login');
+    localStorage.removeItem('username'); // Eliminar los datos del usuario del localStorage
+    this.welcomeMessage = 'Bienvenido'; // Actualizar el mensaje de bienvenida para usuarios no logueados
   }
 
+  // Navegar a la página de Rutinas de Ejercicio
   goToRutinaEjercicios() {
     this.navCtrl.navigateForward('/rutina-ejercicios');
   }
 
+  // Navegar a la página de Recetas Saludables
   goToRecetas() {
     this.navCtrl.navigateForward('/recetas');
   }
