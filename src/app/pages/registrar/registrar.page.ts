@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsuariosService } from '../../services/usuarios.service';
 import { NavController } from '@ionic/angular';
+import { UsuariosService } from '../../services/usuarios.service';
 
 @Component({
   selector: 'app-registrar',
@@ -21,10 +21,16 @@ export class RegistrarPage implements OnInit {
     this.registerForm = this.fb.group({
       nombre: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
+  // Método para manejar el botón de retroceso
+  handleBackButton() {
+    this.navCtrl.back();  // Vuelve a la página anterior
+  }
+
+  // Método para registrar el usuario
   onSubmit() {
     if (this.registerForm.valid) {
       this.usuariosService.createUsuario(this.registerForm.value).subscribe(() => {

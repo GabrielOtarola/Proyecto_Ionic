@@ -11,7 +11,7 @@ import { NavController } from '@ionic/angular';
 })
 export class EditarPage implements OnInit {
   editForm!: FormGroup;
-  userId!: string;  // El ID será de tipo string porque en json-server el ID es alfanumérico
+  userId!: string;  // Cambiado a string
 
   constructor(
     private fb: FormBuilder,
@@ -21,7 +21,7 @@ export class EditarPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Obtiene el ID del usuario desde la URL como string
+    // Obtiene el ID del usuario desde la URL como cadena de texto
     this.userId = this.activatedRoute.snapshot.paramMap.get('id')!;
 
     // Crear el formulario reactivo
@@ -35,42 +35,28 @@ export class EditarPage implements OnInit {
     this.loadUsuario();
   }
 
-  // Cargar los datos del usuario por ID
+  // Método para cargar los datos del usuario por ID
   loadUsuario() {
-    this.usuariosService.getUsuario(this.userId).subscribe(
-      (data) => {
-        if (data) {
-          this.editForm.patchValue({
-            nombre: data.nombre,
-            email: data.email,
-            password: data.password || ''  // Si no tiene contraseña, dejar vacío
-          });
-        }
-      },
-      (error) => {
-        console.error('Error al cargar el usuario:', error);
-        alert('Error al cargar los datos del usuario.');
-      }
-    );
+    this.usuariosService.getUsuario(this.userId).subscribe(data => {
+      this.editForm.patchValue({
+        nombre: data.nombre,
+        email: data.email,
+        password: data.password  // Mostrar la contraseña también
+      });
+    });
   }
 
-  // Actualizar los datos del usuario
+  // Método para actualizar los datos del usuario
   onSubmit() {
     if (this.editForm.valid) {
-      // Reestructurar el objeto para que el ID aparezca primero
-      const usuarioActualizado = {
-        id: this.userId,  // Coloca el ID al principio
-        ...this.editForm.value  // Luego el resto de los campos del formulario
-      };
-
-      this.usuariosService.updateUsuario(this.userId, usuarioActualizado).subscribe(() => {
+      this.usuariosService.updateUsuario(this.userId, this.editForm.value).subscribe(() => {
         alert('Usuario actualizado con éxito');
         this.navCtrl.navigateForward('/usuarios');
       });
     }
   }
 
-  // Eliminar el usuario
+  // Método para eliminar el usuario
   onDelete() {
     if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
       this.usuariosService.deleteUsuario(this.userId).subscribe(() => {
@@ -78,5 +64,10 @@ export class EditarPage implements OnInit {
         this.navCtrl.navigateForward('/usuarios');
       });
     }
+  }
+
+  // Método para manejar el botón de retroceso
+  handleBackButton() {
+    this.navCtrl.back();  // Vuelve a la página anterior
   }
 }

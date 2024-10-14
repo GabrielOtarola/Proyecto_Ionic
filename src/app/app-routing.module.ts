@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'home',  // Página principal
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
-    canActivate: [AuthGuard]  // Protegemos esta ruta
+    //canActivate: [AuthGuard]  // Protegemos esta ruta
   },
   {
     path: 'login1',  // Página de login
