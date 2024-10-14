@@ -40,17 +40,17 @@ const routes: Routes = [
   {
     path: 'usuarios',  // Lista de usuarios
     loadChildren: () => import('./pages/usuarios/usuarios.module').then(m => m.UsuariosPageModule),
-    canActivate: [AuthGuard]  // Protegemos esta ruta
+    //canActivate: [AuthGuard]  // Protegemos esta ruta
   },
   {
     path: 'registrar',  // Página de registro de un nuevo usuario
     loadChildren: () => import('./pages/registrar/registrar.module').then(m => m.RegistrarPageModule),
-    canActivate: [AuthGuard]  // Protegemos esta ruta
+    //canActivate: [AuthGuard]  // Protegemos esta ruta
   },
   {
     path: 'editar/:id',  // Página para editar un usuario específico
     loadChildren: () => import('./pages/editar/editar.module').then(m => m.EditarPageModule),
-    canActivate: [AuthGuard]  // Protegemos esta ruta
+    //canActivate: [AuthGuard]  // Protegemos esta ruta
   },
 ];
 
