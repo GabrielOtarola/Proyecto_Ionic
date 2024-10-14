@@ -4,6 +4,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage-angular'; // Importar el IonicStorageModule
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +20,7 @@ import { BienvenidaModalComponent } from './bienvenida-modal/bienvenida-modal.co
     ReactiveFormsModule, // Importación del módulo para formularios reactivos
     BrowserAnimationsModule, // Importación del módulo de animaciones
     IonicStorageModule.forRoot(), // Configuración del almacenamiento
+    HttpClientModule, // Agrega HttpClientModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, // Proveedor de la estrategia de rutas

@@ -37,11 +37,24 @@
         <ion-label>Recetas</ion-label>
       </ion-item>
 
+      <!-- Rutas para el CRUD de Usuarios -->
+      <ion-item routerLink="/usuarios">
+        <ion-icon name="people-outline" slot="start"></ion-icon>
+        <ion-label>Usuarios</ion-label>
+      </ion-item>
+
+      <ion-item routerLink="/registrar">
+        <ion-icon name="person-add-outline" slot="start"></ion-icon>
+        <ion-label>Registrar Usuario</ion-label>
+      </ion-item>
+
+      <!-- Condicional para mostrar el botón de cerrar sesión si está autenticado -->
       <ion-item *ngIf="isLoggedIn" (click)="logout()">
         <ion-icon slot="start" name="log-out"></ion-icon>
         <ion-label>Cerrar sesión</ion-label>
       </ion-item>
 
+      <!-- Condicional para mostrar el botón de iniciar sesión si no está autenticado -->
       <ion-item *ngIf="!isLoggedIn" (click)="goToLogin()">
         <ion-icon slot="start" name="log-in"></ion-icon>
         <ion-label>Iniciar sesión</ion-label>
@@ -100,3 +113,4 @@
     </mat-card>
   </div>
 </ion-content>
+
