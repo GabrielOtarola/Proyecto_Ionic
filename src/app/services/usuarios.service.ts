@@ -6,32 +6,28 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UsuariosService {
-  private apiUrl = 'http://localhost:3000/usuarios'; // Asegúrate de que la URL de tu json-server esté correcta
+  private apiUrl = 'http://localhost:3000/usuarios'; // URL del json-server
 
   constructor(private http: HttpClient) {}
 
-  // Obtener la lista de usuarios
   getUsuarios(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(this.apiUrl);  // Obtiene todos los usuarios
   }
 
-  // Obtener un usuario por ID
-  getUsuario(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}`);
+  // Método que recibe un id y devuelve los datos del usuario con ese id
+  getUsuario(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);  // Obtiene un usuario por su ID
   }
 
-  // Crear un nuevo usuario
   createUsuario(usuario: any): Observable<any> {
-    return this.http.post(this.apiUrl, usuario);
+    return this.http.post(this.apiUrl, usuario);  // Crea un nuevo usuario
   }
 
-  // Actualizar un usuario
-  updateUsuario(id: number, usuario: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, usuario);
+  updateUsuario(id: string, usuario: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, usuario);  // Actualiza un usuario por su ID
   }
 
-  // Eliminar un usuario
-  deleteUsuario(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  deleteUsuario(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);  // Elimina un usuario por su ID
   }
 }

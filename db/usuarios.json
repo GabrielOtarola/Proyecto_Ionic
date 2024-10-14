@@ -1,10 +1,16 @@
 {
   "usuarios": [
     {
-      "id": "408a",
-      "nombre": "Gabriel",
-      "email": "gaoc@gmail.com",
+      "id": "f0cf",
+      "nombre": "Gabriel2365",
+      "email": "ga@dchs.cl",
       "password": "240608_P"
+    },
+    {
+      "id": "ca34",
+      "nombre": "sebastian1232a",
+      "email": "habs@dskjn.cl",
+      "password": "1234567dms"
     }
   ]
 }
