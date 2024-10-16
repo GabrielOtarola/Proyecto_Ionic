@@ -36,22 +36,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]  // Protegemos esta ruta
   },
 
-  // CRUD de usuarios
+  // CRUD de Recetas
   {
-    path: 'usuarios',  // Lista de usuarios
-    loadChildren: () => import('./pages/usuarios/usuarios.module').then(m => m.UsuariosPageModule),
-    //canActivate: [AuthGuard]  // Protegemos esta ruta
+    path: 'crud-recetas',
+    loadChildren: () => import('./crud-recetas/crud-recetas.module').then( m => m.CrudRecetasPageModule)
   },
-  {
-    path: 'registrar',  // Página de registro de un nuevo usuario
-    loadChildren: () => import('./pages/registrar/registrar.module').then(m => m.RegistrarPageModule),
-    //canActivate: [AuthGuard]  // Protegemos esta ruta
-  },
-  {
-    path: 'editar/:id',  // Página para editar un usuario específico
-    loadChildren: () => import('./pages/editar/editar.module').then(m => m.EditarPageModule),
-    //canActivate: [AuthGuard]  // Protegemos esta ruta
-  },
+
 ];
 
 @NgModule({
