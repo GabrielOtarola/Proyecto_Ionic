@@ -1,4 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
+import { NavController } from '@ionic/angular'; // Importar NavController
+import { ApiService } from '../services/api.service';
 import * as $ from 'jquery';
 
 @Component({
@@ -9,7 +11,7 @@ import * as $ from 'jquery';
 export class RecuperarContrasenaPage implements AfterViewInit {
   emailSent = false;
 
-  constructor() {}
+  constructor(private navCtrl: NavController, private apiService: ApiService) {} // Inyectar NavController
 
   ngAfterViewInit() {
     // Configurar el evento de validación del formulario con jQuery
@@ -32,9 +34,15 @@ export class RecuperarContrasenaPage implements AfterViewInit {
 
       // Si la validación es exitosa
       if (isValid) {
-        // Mostrar el mensaje de correo enviado
-        $('#emailSuccess').text('El correo de recuperación ha sido enviado.');
-        this.emailSent = true;
+        this.apiService.isEmailRegistered(email).subscribe((isRegistered: boolean) => {
+          if (isRegistered) {
+            $('#emailSuccess').text('El correo de recuperación ha sido enviado.');
+            this.emailSent = true;
+            this.navCtrl.navigateForward('/login');
+          } else {
+            $('#emailError').text('El correo no está registrado.');
+          }
+        });
       }
     });
   }

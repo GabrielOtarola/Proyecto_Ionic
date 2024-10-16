@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'home',  // Página principal
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
-    //canActivate: [AuthGuard]  // Protegemos esta ruta
+    canActivate: [AuthGuard]  // Protegemos esta ruta
   },
   {
     path: 'login1',  // Página de login
@@ -35,13 +35,12 @@ const routes: Routes = [
     loadChildren: () => import('./recetas/recetas.module').then(m => m.RecetasPageModule),
     canActivate: [AuthGuard]  // Protegemos esta ruta
   },
-
   // CRUD de Recetas
   {
     path: 'crud-recetas',
-    loadChildren: () => import('./crud-recetas/crud-recetas.module').then( m => m.CrudRecetasPageModule)
+    loadChildren: () => import('./crud-recetas/crud-recetas.module').then(m => m.CrudRecetasPageModule),
+    canActivate: [AuthGuard]  // Protegemos esta ruta
   },
-
 ];
 
 @NgModule({

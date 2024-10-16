@@ -75,8 +75,3 @@ export class CrudRecetasPage implements OnInit {
     this.navCtrl.back();  // Retrocede a la página anterior
   }
 }
-
-
-
-
-
