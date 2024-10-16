@@ -48,6 +48,7 @@ export class Login1Page implements OnInit {
     const user = await this.dbService.getUser(username);
     if (user && user.password === password) {
       alert('Inicio de sesión exitoso.');
+      localStorage.setItem('username', username); // Almacena el nombre de usuario
       this.navCtrl.navigateForward('/home');
     } else {
       alert('Usuario o contraseña incorrectos.');

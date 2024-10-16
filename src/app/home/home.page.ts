@@ -24,13 +24,12 @@ export class HomePage implements OnInit {
   }
 
   async setWelcomeMessage() {
-    // Verificamos si el usuario está logueado leyendo desde localStorage
     const storedUsername = localStorage.getItem('username');
     if (storedUsername) {
       this.isLoggedIn = true;
       this.username = storedUsername;
       this.welcomeMessage = `Bienvenido, ${this.username}`;
-      await this.presentWelcomeModal(this.username); // Mostrar el modal de bienvenida si es la primera vez
+      await this.presentWelcomeModal(this.username); // Mostrar el modal de bienvenida
     } else {
       this.isLoggedIn = false;
       this.welcomeMessage = 'Bienvenido';
@@ -57,6 +56,7 @@ export class HomePage implements OnInit {
     this.isLoggedIn = false;
     localStorage.removeItem('username'); // Eliminar los datos del usuario del localStorage
     this.welcomeMessage = 'Bienvenido'; // Actualizar el mensaje de bienvenida para usuarios no logueados
+    this.navCtrl.navigateForward('/login1'); // Redirigir al usuario a la página de inicio de sesión
   }
 
   // Navegar a la página de Rutinas de Ejercicio
