@@ -41,9 +41,16 @@ export class Registrar1Page implements OnInit {
   async onSubmit() {
     if (this.registerForm.valid) {
       const formData = this.registerForm.value;
-      await this.dbService.addUser(formData.username, formData.password);
-      alert('Usuario registrado con éxito.');
-      this.navCtrl.navigateForward('/login1');
+      this.apiService.addUser(formData).subscribe(
+        () => {
+          alert('Usuario registrado con éxito.');
+          this.navCtrl.navigateForward('/login1');
+        },
+        (error) => {
+          console.error('Error al registrar usuario:', error);
+          alert('Hubo un problema al registrar el usuario.');
+        }
+      );
     } else {
       alert('Por favor completa todos los campos correctamente.');
     }

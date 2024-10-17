@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { BienvenidaModalComponent } from '../bienvenida-modal/bienvenida-modal.component';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-home',
@@ -16,11 +17,13 @@ export class HomePage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private activatedRoute: ActivatedRoute,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
     this.setWelcomeMessage();
+    this.notificationService.scheduleWaterReminder();
   }
 
   async setWelcomeMessage() {
