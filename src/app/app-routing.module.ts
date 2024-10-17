@@ -36,8 +36,7 @@ const routes: Routes = [
   // CRUD de Recetas
   {
     path: 'crud-recetas',
-    loadChildren: () => import('./crud-recetas/crud-recetas.module').then(m => m.CrudRecetasPageModule),
-    canActivate: [AuthGuard]  // Protegemos esta ruta
+    loadChildren: () => import('./crud-recetas/crud-recetas.module').then(m => m.CrudRecetasPageModule)
   },
 ];
 
