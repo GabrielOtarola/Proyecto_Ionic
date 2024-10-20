@@ -30,6 +30,18 @@ export class Login1Page implements OnInit {
     });
   }
 
+  async onSubmit() {
+    const { username, password } = this.loginForm.value;
+    const user = await this.dbService.getUser(username, password);
+    if (user) {
+      alert('Inicio de sesión exitoso.');
+      localStorage.setItem('username', username);
+      this.navCtrl.navigateForward('/home');
+    } else {
+      alert('Usuario o contraseña incorrectos.');
+    }
+  }
+
   isFieldInvalid(field: string): boolean {
     const control = this.loginForm.get(field);
     return !!control && control.invalid && (control.dirty || control.touched);
@@ -43,19 +55,8 @@ export class Login1Page implements OnInit {
     return '';
   }
 
-  async onSubmit() {
-    const { username, password } = this.loginForm.value;
-    const user = await this.dbService.getUser(username);
-    if (user && user.password === password) {
-      alert('Inicio de sesión exitoso.');
-      localStorage.setItem('username', username); // Almacena el nombre de usuario
-      this.navCtrl.navigateForward('/home');
-    } else {
-      alert('Usuario o contraseña incorrectos.');
-    }
-  }
-
+  // Método agregado para evitar error en el HTML
   loginWithGoogle() {
-    alert('Funcionalidad de Google Login no implementada.');
+    console.log('Login con Google no implementado todavía.');
   }
 }

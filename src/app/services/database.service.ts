@@ -19,27 +19,30 @@ export class DatabaseService {
 
   async initDB() {
     try {
-      // Verificar si estamos en una plataforma web
       if (Capacitor.getPlatform() === 'web') {
         console.warn('SQLite no es compatible con la web. Usando almacenamiento web.');
         return;
       }
 
-      const connection: SQLiteDBConnection | void = await CapacitorSQLite.createConnection({
+      const connection = await CapacitorSQLite.createConnection({
         database: 'mydb',
         version: 1,
         encrypted: false,
         mode: 'no-encryption'
+      }).catch(error => {
+        console.error('Error al crear la conexión de la base de datos:', error);
+        return undefined;
       });
 
-      if (connection !== undefined) {
-        this.db = connection;
+      if (connection && typeof connection === 'object') {
+        this.db = connection as unknown as SQLiteDBConnection;
+        await this.db.open(); // Abrir la conexión
         await this.createTables();
       } else {
-        console.error('La conexión a la base de datos no está inicializada.');
+        console.error('No se pudo establecer la conexión a la base de datos.');
       }
     } catch (error) {
-      console.error('Error inicializando la base de datos', error);
+      console.error('Error inicializando la base de datos:', error);
     }
   }
 
@@ -48,43 +51,92 @@ export class DatabaseService {
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY NOT NULL,
         username TEXT NOT NULL,
-        password TEXT NOT NULL
+        password TEXT NOT NULL,
+        email TEXT,
+        age INTEGER,
+        height INTEGER,
+        weight INTEGER,
+        gender TEXT,
+        activityLevel TEXT
       );
     `;
     if (this.db) {
-      await this.db.execute(createTableQuery);
+      try {
+        await this.db.execute(createTableQuery);
+        console.log('Tabla de usuarios creada en SQLite.');
+      } catch (error) {
+        console.error('Error al crear la tabla de usuarios:', error);
+      }
     } else {
       console.error('La conexión a la base de datos no está inicializada.');
     }
   }
 
-  async addUser(username: string, password: string) {
+  async registerUser(userData: any): Promise<boolean> {
+    const { username, password, email, age, height, weight, gender, activityLevel } = userData;
+
     if (Capacitor.getPlatform() === 'web') {
-      // Almacenamiento en web
-      await this.storage.set(username, { username, password });
+      await this.storage.set(username, userData);
+      console.log('Usuario registrado en almacenamiento web:', userData);
+      return true;
     } else if (this.db) {
-      const insertQuery = `
-        INSERT INTO users (username, password) VALUES (?, ?);
-      `;
-      await this.db.run(insertQuery, [username, password]);
+      try {
+        const insertQuery = `
+          INSERT INTO users (username, password, email, age, height, weight, gender, activityLevel)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+        `;
+        await this.db.run(insertQuery, [username, password, email, age, height, weight, gender, activityLevel]);
+        console.log('Usuario registrado en SQLite:', userData);
+        return true;
+      } catch (error) {
+        console.error('Error al registrar el usuario:', error);
+        return false;
+      }
     } else {
       console.error('La conexión a la base de datos no está inicializada.');
+      return false;
     }
   }
 
-  async getUser(username: string) {
+  async isEmailRegistered(email: string): Promise<boolean> {
     if (Capacitor.getPlatform() === 'web') {
-      // Obtener usuario de almacenamiento web
-      return await this.storage.get(username);
+      const keys = await this.storage.keys();
+      for (const key of keys) {
+        const user = await this.storage.get(key);
+        if (user && user.email && user.email.toLowerCase() === email.toLowerCase()) {
+          return true;
+        }
+      }
+      return false;
     } else if (this.db) {
-      const selectQuery = `
-        SELECT * FROM users WHERE username = ?;
-      `;
-      const result = await this.db.query(selectQuery, [username]);
-      return result?.values;
+      const query = `SELECT * FROM users WHERE email = ?`;
+      const result = await this.db.query(query, [email]);
+      return result.values ? result.values.length > 0 : false;
     } else {
       console.error('La conexión a la base de datos no está inicializada.');
+      return false;
+    }
+  }
+
+  async getUser(username: string, password: string) {
+    if (Capacitor.getPlatform() === 'web') {
+      const keys = await this.storage.keys();
+      for (const key of keys) {
+        const user = await this.storage.get(key);
+        if (user && user.username === username && user.password === password) {
+          return user;
+        }
+      }
       return null;
+    } else if (this.db) {
+      const selectQuery = `SELECT * FROM users WHERE username = ? AND password = ?;`;
+      const result = await this.db.query(selectQuery, [username, password]);
+      if (result && result.values && result.values.length > 0) {
+        return result.values[0];
+      } else {
+        return null;
+      }
     }
   }
 }
+
