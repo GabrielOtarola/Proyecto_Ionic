@@ -32,11 +32,13 @@ const routes: Routes = [
   {
     path: 'recetas',  // Página de recetas
     loadChildren: () => import('./recetas/recetas.module').then(m => m.RecetasPageModule),
+    canActivate: [AuthGuard]  // Protegemos esta ruta
   },
   // CRUD de Recetas
   {
     path: 'crud-recetas',
     loadChildren: () => import('./crud-recetas/crud-recetas.module').then(m => m.CrudRecetasPageModule),
+    canActivate: [AuthGuard]  // Protegemos esta ruta
   },
 ];
 

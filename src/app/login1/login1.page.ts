@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { DatabaseService } from '../services/database.service';
+import { Storage } from '@ionic/storage-angular'; // Importar Storage
 
 @Component({
   selector: 'app-login1',
@@ -14,7 +15,8 @@ export class Login1Page implements OnInit {
   constructor(
     private fb: FormBuilder,
     private navCtrl: NavController,
-    private dbService: DatabaseService
+    private dbService: DatabaseService,
+    private storage: Storage // Añadir Storage
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
@@ -35,7 +37,7 @@ export class Login1Page implements OnInit {
     const user = await this.dbService.getUser(username, password);
     if (user) {
       alert('Inicio de sesión exitoso.');
-      localStorage.setItem('username', username);
+      await this.storage.set('session_user', user); // Guardar el usuario en la sesión
       this.navCtrl.navigateForward('/home');
     } else {
       alert('Usuario o contraseña incorrectos.');
@@ -55,7 +57,6 @@ export class Login1Page implements OnInit {
     return '';
   }
 
-  // Método agregado para evitar error en el HTML
   loginWithGoogle() {
     console.log('Login con Google no implementado todavía.');
   }

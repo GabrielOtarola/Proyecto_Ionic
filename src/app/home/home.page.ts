@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
 import { BienvenidaModalComponent } from '../bienvenida-modal/bienvenida-modal.component';
 import { NotificationService } from '../services/notification.service';
+import { Storage } from '@ionic/storage-angular'; // Importar Storage
 
 @Component({
   selector: 'app-home',
@@ -16,9 +16,9 @@ export class HomePage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
-    private activatedRoute: ActivatedRoute,
     private modalController: ModalController,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private storage: Storage // Añadir Storage
   ) {}
 
   ngOnInit() {
@@ -27,10 +27,10 @@ export class HomePage implements OnInit {
   }
 
   async setWelcomeMessage() {
-    const storedUsername = localStorage.getItem('username');
-    if (storedUsername) {
+    const user = await this.storage.get('session_user');
+    if (user) {
       this.isLoggedIn = true;
-      this.username = storedUsername;
+      this.username = user.username;
       this.welcomeMessage = `Bienvenido, ${this.username}`;
       await this.presentWelcomeModal(this.username); // Mostrar el modal de bienvenida
     } else {
@@ -39,7 +39,6 @@ export class HomePage implements OnInit {
     }
   }
 
-  // Mostrar un modal de bienvenida al usuario
   async presentWelcomeModal(username: string) {
     const modal = await this.modalController.create({
       component: BienvenidaModalComponent,
@@ -49,26 +48,24 @@ export class HomePage implements OnInit {
     return await modal.present();
   }
 
-  // Navegar a la página de inicio de sesión
+  // Método para navegar a la página de inicio de sesión
   goToLogin() {
     this.navCtrl.navigateForward('/login1');
   }
 
-  // Cerrar sesión y permanecer en la página actual
-  logout() {
+  async logout() {
     this.isLoggedIn = false;
-    localStorage.removeItem('username'); // Eliminar los datos del usuario del localStorage
-    this.welcomeMessage = 'Bienvenido'; // Actualizar el mensaje de bienvenida para usuarios no logueados
-    this.navCtrl.navigateForward('/login1'); // Redirigir al usuario a la página de inicio de sesión
+    await this.storage.remove('session_user'); // Eliminar la sesión del usuario
+    this.welcomeMessage = 'Bienvenido';
+    this.navCtrl.navigateRoot('/login1'); // Redirigir al usuario a la página de inicio de sesión
   }
 
-  // Navegar a la página de Rutinas de Ejercicio
   goToRutinaEjercicios() {
     this.navCtrl.navigateForward('/rutina-ejercicios');
   }
 
-  // Navegar a la página de Recetas Saludables
   goToRecetas() {
     this.navCtrl.navigateForward('/recetas');
   }
 }
+
