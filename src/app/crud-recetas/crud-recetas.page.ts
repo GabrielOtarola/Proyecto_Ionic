@@ -13,7 +13,7 @@ export class CrudRecetasPage implements OnInit {
   recetas: any[] = [];
   editMode: boolean = false;
   recetaIdEdit!: number;
-  private apiUrl = 'http://localhost:3001/recetas';  // Ruta del json-server
+  private apiUrl = 'http://localhost:3000/recetas';  // Ruta del json-server
 
   constructor(
     private fb: FormBuilder,
