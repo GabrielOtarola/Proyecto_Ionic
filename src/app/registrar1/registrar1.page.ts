@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { DatabaseService } from '../services/database.service';
-import { ApiService } from '../services/api.service'; // Asegúrate de importar ApiService
 
 @Component({
   selector: 'app-registrar1',
@@ -15,8 +14,7 @@ export class Registrar1Page implements OnInit {
   constructor(
     private fb: FormBuilder,
     private navCtrl: NavController,
-    private dbService: DatabaseService,
-    private apiService: ApiService // Inyecta ApiService aquí
+    private dbService: DatabaseService
   ) {}
 
   ngOnInit() {
@@ -35,22 +33,23 @@ export class Registrar1Page implements OnInit {
       activityLevel: ['', Validators.required]
     });
 
-    this.dbService.initDB();
+    this.dbService.initDB().then(() => {
+      console.log('Base de datos inicializada.');
+    }).catch(error => {
+      console.error('Error inicializando la base de datos', error);
+    });
   }
 
   async onSubmit() {
     if (this.registerForm.valid) {
       const formData = this.registerForm.value;
-      this.apiService.addUser(formData).subscribe(
-        () => {
-          alert('Usuario registrado con éxito.');
-          this.navCtrl.navigateForward('/login1');
-        },
-        (error) => {
-          console.error('Error al registrar usuario:', error);
-          alert('Hubo un problema al registrar el usuario.');
-        }
-      );
+      const success = await this.dbService.registerUser(formData);
+      if (success) {
+        alert('Usuario registrado con éxito.');
+        this.navCtrl.navigateForward('/login1');
+      } else {
+        alert('Hubo un problema al registrar el usuario.');
+      }
     } else {
       alert('Por favor completa todos los campos correctamente.');
     }

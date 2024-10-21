@@ -31,7 +31,7 @@ export class RecetasService {
   }
 
   // Eliminar una receta
-  deleteReceta(id: number): Observable<any> {
+  deleteReceta(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

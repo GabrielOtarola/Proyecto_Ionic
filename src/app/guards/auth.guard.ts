@@ -6,9 +6,16 @@ import { Storage } from '@ionic/storage-angular';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private storage: Storage, private router: Router) {}
+  constructor(private storage: Storage, private router: Router) {
+    this.initStorage(); // Inicializar almacenamiento
+  }
+
+  async initStorage() {
+    await this.storage.create();
+  }
 
   async canActivate(): Promise<boolean> {
+    await this.initStorage(); // Asegura que el almacenamiento esté listo
     const user = await this.storage.get('session_user');
     if (user) {
       return true;
@@ -19,4 +26,5 @@ export class AuthGuard implements CanActivate {
     }
   }
 }
+
 

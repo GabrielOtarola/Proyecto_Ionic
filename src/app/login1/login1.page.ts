@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { DatabaseService } from '../services/database.service';
+import { Storage } from '@ionic/storage-angular'; // Importar Storage
 
 @Component({
   selector: 'app-login1',
@@ -14,7 +15,8 @@ export class Login1Page implements OnInit {
   constructor(
     private fb: FormBuilder,
     private navCtrl: NavController,
-    private dbService: DatabaseService
+    private dbService: DatabaseService,
+    private storage: Storage // Añadir Storage
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
@@ -30,6 +32,18 @@ export class Login1Page implements OnInit {
     });
   }
 
+  async onSubmit() {
+    const { username, password } = this.loginForm.value;
+    const user = await this.dbService.getUser(username, password);
+    if (user) {
+      alert('Inicio de sesión exitoso.');
+      await this.storage.set('session_user', user); // Guardar el usuario en la sesión
+      this.navCtrl.navigateForward('/home');
+    } else {
+      alert('Usuario o contraseña incorrectos.');
+    }
+  }
+
   isFieldInvalid(field: string): boolean {
     const control = this.loginForm.get(field);
     return !!control && control.invalid && (control.dirty || control.touched);
@@ -43,19 +57,7 @@ export class Login1Page implements OnInit {
     return '';
   }
 
-  async onSubmit() {
-    const { username, password } = this.loginForm.value;
-    const user = await this.dbService.getUser(username);
-    if (user && user.password === password) {
-      alert('Inicio de sesión exitoso.');
-      localStorage.setItem('username', username); // Almacena el nombre de usuario
-      this.navCtrl.navigateForward('/home');
-    } else {
-      alert('Usuario o contraseña incorrectos.');
-    }
-  }
-
   loginWithGoogle() {
-    alert('Funcionalidad de Google Login no implementada.');
+    console.log('Login con Google no implementado todavía.');
   }
 }
