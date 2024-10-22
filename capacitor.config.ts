@@ -1,6 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
+<<<<<<< HEAD
   appId: 'com.example.app',
   appName: 'MyApp',
   webDir: 'www',
@@ -12,6 +13,11 @@ const config: CapacitorConfig = {
       forceCodeForRefreshToken: true,
     },
   },
+=======
+  appId: 'io.ionic.starter',
+  appName: 'vida_saludable',
+  webDir: 'www'
+>>>>>>> parent of 2cba86f (Merge branch 'main' into Sebastian)
 };
 
 export default config;
