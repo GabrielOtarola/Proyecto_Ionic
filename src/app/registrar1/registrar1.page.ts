@@ -43,7 +43,6 @@ export class Registrar1Page implements OnInit {
   async onSubmit() {
     if (this.registerForm.valid) {
       const formData = this.registerForm.value;
-<<<<<<< HEAD
       const success = await this.dbService.registerUser(formData);
       if (success) {
         alert('Usuario registrado con éxito.');
@@ -51,11 +50,6 @@ export class Registrar1Page implements OnInit {
       } else {
         alert('Hubo un problema al registrar el usuario.');
       }
-=======
-      await this.dbService.addUser(formData.username, formData.password);
-      alert('Usuario registrado con éxito.');
-      this.navCtrl.navigateForward('/login1');
->>>>>>> parent of 2fa542c (Añadiendo Notification-local (Api Nativa))
     } else {
       alert('Por favor completa todos los campos correctamente.');
     }

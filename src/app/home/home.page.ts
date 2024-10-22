@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from '@ionic/angular';
 import { BienvenidaModalComponent } from '../bienvenida-modal/bienvenida-modal.component';
-<<<<<<< HEAD
 import { NotificationService } from '../services/notification.service';
 import { Storage } from '@ionic/storage-angular'; // Importar Storage
-=======
->>>>>>> parent of 2fa542c (Añadiendo Notification-local (Api Nativa))
 
 @Component({
   selector: 'app-home',
@@ -19,18 +16,14 @@ export class HomePage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
-<<<<<<< HEAD
     private modalController: ModalController,
     private notificationService: NotificationService,
     private storage: Storage // Añadir Storage
-=======
-    private activatedRoute: ActivatedRoute,
-    private modalController: ModalController
->>>>>>> parent of 2fa542c (Añadiendo Notification-local (Api Nativa))
   ) {}
 
   ngOnInit() {
     this.setWelcomeMessage();
+    this.notificationService.scheduleWaterReminder();
   }
 
   async setWelcomeMessage() {
